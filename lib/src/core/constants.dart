@@ -46,6 +46,8 @@ abstract final class Assets {
   static const String home10 = 'assets/home/10.svg';
 
   static const String power = 'assets/power.png';
+  static const String router = 'assets/router.png';
+  static const String wifi = 'assets/wifi.png';
 }
 
 abstract final class Keys {
@@ -56,4 +58,5 @@ abstract final class Keys {
 abstract final class Urls {
   static const String privacy = 'https://instagram.com';
   static const String terms = 'https://rezka.ag';
+  static const String contact = '';
 }

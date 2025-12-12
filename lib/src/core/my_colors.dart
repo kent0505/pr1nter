@@ -26,37 +26,37 @@ final class MyColors extends ThemeExtension<MyColors> {
   final List<Color> gradient;
 
   factory MyColors.light() {
-    return MyColors(
-      accent: const Color(0xff384cff),
-      accent2: const Color(0xffffb800),
-      accent3: const Color(0xff00cf34),
-      bg: const Color(0xfff8fafb),
-      text: const Color(0xff000000),
-      text2: const Color(0xffc7c7c7),
-      text3: const Color(0xff8e8e8e),
-      tertiary1: const Color(0xffFFFFFF),
-      tertiary2: const Color(0xffFCFEFF),
+    return const MyColors(
+      accent: Color(0xff384cff),
+      accent2: Color(0xffffb800),
+      accent3: Color(0xff00cf34),
+      bg: Color(0xfff8fafb),
+      text: Color(0xff000000),
+      text2: Color(0xffc7c7c7),
+      text3: Color(0xff8e8e8e),
+      tertiary1: Color(0xffFFFFFF),
+      tertiary2: Color(0xffFCFEFF),
       gradient: [
-        const Color(0xff0013C0).withValues(alpha: 0),
-        const Color(0xff8E38FF),
+        Color(0xff0013C0),
+        Color(0xff8E38FF),
       ],
     );
   }
 
   factory MyColors.dark() {
-    return MyColors(
-      accent: const Color(0xff384cff),
-      accent2: const Color(0xffffb800),
-      accent3: const Color(0xff00cf34),
-      bg: const Color(0xfff8fafb),
-      text: const Color(0xff000000),
-      text2: const Color(0xffc7c7c7),
-      text3: const Color(0xff8e8e8e),
-      tertiary1: const Color(0xffFFFFFF),
-      tertiary2: const Color(0xffFCFEFF),
+    return const MyColors(
+      accent: Color(0xff384cff),
+      accent2: Color(0xffffb800),
+      accent3: Color(0xff00cf34),
+      bg: Color(0xfff8fafb),
+      text: Color(0xff000000),
+      text2: Color(0xffc7c7c7),
+      text3: Color(0xff8e8e8e),
+      tertiary1: Color(0xffFFFFFF),
+      tertiary2: Color(0xffFCFEFF),
       gradient: [
-        const Color(0xff0013C0).withValues(alpha: 0),
-        const Color(0xff8E38FF),
+        Color(0xff0013C0),
+        Color(0xff8E38FF),
       ],
     );
   }

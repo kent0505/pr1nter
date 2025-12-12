@@ -21,7 +21,7 @@ class SettingsTile extends StatelessWidget {
     final colors = Theme.of(context).extension<MyColors>()!;
 
     return Container(
-      height: 52,
+      height: 48,
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: colors.tertiary1,

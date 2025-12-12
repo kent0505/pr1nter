@@ -28,16 +28,16 @@ class NavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const _NavBarButton(
+          _NavBarButton(
             index: 0,
             title: 'Scanner',
             asset: Assets.scanner,
+            onPressed: () {},
           ),
-          _NavBarButton(
+          const _NavBarButton(
             index: 1,
             title: 'Printer',
             asset: Assets.printer,
-            onPressed: () {},
           ),
           const _NavBarButton(
             index: 2,

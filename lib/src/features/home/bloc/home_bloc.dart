@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'home_event.dart';
 
 class HomeBloc extends Bloc<HomeEvent, int> {
-  HomeBloc() : super(0) {
+  HomeBloc() : super(1) {
     on<HomeEvent>(
       (event, emit) => switch (event) {
         ChangePage() => _changePage(event, emit),
