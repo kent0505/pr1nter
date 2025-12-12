@@ -19,26 +19,27 @@ class NavBar extends StatelessWidget {
       height: Constants.navBarHeight + bottom,
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
-        vertical: 8,
+        vertical: 4,
       ),
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
-        color: colors.tertiary1,
+        color: colors.tertiary2,
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _NavBarButton(
+          const _NavBarButton(
             index: 0,
-            title: 'Search',
-            asset: Assets.settings,
+            title: 'Scanner',
+            asset: Assets.scanner,
           ),
           _NavBarButton(
             index: 1,
-            title: 'Collections',
-            asset: Assets.settings,
+            title: 'Printer',
+            asset: Assets.printer,
+            onPressed: () {},
           ),
-          _NavBarButton(
+          const _NavBarButton(
             index: 2,
             title: 'Settings',
             asset: Assets.settings,
@@ -54,11 +55,13 @@ class _NavBarButton extends StatelessWidget {
     required this.index,
     required this.asset,
     required this.title,
+    this.onPressed,
   });
 
   final int index;
   final String title;
   final String asset;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -72,26 +75,29 @@ class _NavBarButton extends StatelessWidget {
             final active = state == index;
 
             return Button(
-              onPressed: active
-                  ? null
-                  : () {
-                      context.read<HomeBloc>().add(ChangePage(index: index));
-                    },
+              onPressed: onPressed ??
+                  (active
+                      ? null
+                      : () {
+                          context
+                              .read<HomeBloc>()
+                              .add(ChangePage(index: index));
+                        }),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgWidget(
                     asset,
                     height: 24,
-                    color: active ? colors.text : colors.text2,
+                    color: active ? colors.accent : colors.text2,
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 4),
                   Text(
                     title,
                     style: TextStyle(
-                      color: active ? colors.text : colors.text2,
+                      color: active ? colors.accent : colors.text2,
                       fontSize: 12,
-                      fontFamily: AppFonts.w500,
+                      fontFamily: active ? AppFonts.w700 : AppFonts.w500,
                     ),
                   ),
                 ],

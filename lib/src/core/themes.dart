@@ -19,12 +19,12 @@ class Themes {
       colorScheme: isDark
           ? ColorScheme.dark(
               primary: colors.text,
-              secondary: colors.tertiary4, // overscroll
+              secondary: colors.text2, // overscroll
               surface: colors.bg, // bg color when push
             )
           : ColorScheme.light(
               primary: colors.text,
-              secondary: colors.tertiary4,
+              secondary: colors.text2,
               surface: colors.bg,
             ),
 
@@ -59,9 +59,9 @@ class Themes {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colors.tertiary2,
+        fillColor: colors.bg,
         contentPadding: const EdgeInsets.symmetric(
-          vertical: 16,
+          vertical: 10,
           horizontal: 16,
         ),
         hintStyle: TextStyle(
@@ -69,17 +69,14 @@ class Themes {
           fontSize: 16,
           fontFamily: AppFonts.w500,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.transparent),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.transparent),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.transparent),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.transparent),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.transparent),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.transparent),
         ),
       ),
       extensions: [colors],

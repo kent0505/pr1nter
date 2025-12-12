@@ -77,7 +77,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
-              color: colors.tertiary3,
+              color: colors.tertiary2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,7 +90,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                         dotHeight: 8,
                         dotWidth: 8,
                         spacing: 4,
-                        dotColor: colors.tertiary4,
+                        dotColor: colors.tertiary2,
                         activeDotColor: colors.accent,
                       ),
                     ),

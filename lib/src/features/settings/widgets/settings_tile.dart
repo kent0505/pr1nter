@@ -24,7 +24,7 @@ class SettingsTile extends StatelessWidget {
       height: 52,
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: colors.tertiary2,
+        color: colors.tertiary1,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Button(
@@ -52,7 +52,7 @@ class SettingsTile extends StatelessWidget {
               quarterTurns: 2,
               child: SvgWidget(
                 Assets.back,
-                color: colors.accent,
+                color: colors.text2,
               ),
             ),
             const SizedBox(width: 8),

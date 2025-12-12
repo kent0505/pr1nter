@@ -65,9 +65,9 @@ class _TabWidgetState extends State<TabWidget>
           child: TabBar(
             controller: _tabController,
             indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
               color: _tabController.index == _selectedIndex
-                  ? colors.tertiary3
+                  ? colors.tertiary2
                   : null,
             ),
             labelStyle: TextStyle(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
 import 'button.dart';
 import 'svg_widget.dart';
 
@@ -18,22 +17,12 @@ class IconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<MyColors>()!;
-
     return Button(
       onPressed: onPressed,
-      child: Container(
-        height: 52,
-        width: 52,
-        decoration: BoxDecoration(
-          color: colors.tertiary2,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Center(
-          child: SvgWidget(
-            asset,
-            color: color,
-          ),
+      child: Center(
+        child: SvgWidget(
+          asset,
+          color: color,
         ),
       ),
     );

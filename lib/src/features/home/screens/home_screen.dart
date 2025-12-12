@@ -8,7 +8,6 @@ import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/field.dart';
 import '../../../core/widgets/main_button.dart';
 import '../../../core/widgets/svg_widget.dart';
-import '../../../core/widgets/switch_button.dart';
 import '../../internet/bloc/internet_bloc.dart';
 import '../../internet/widgets/no_internet.dart';
 import '../../settings/screens/settings_screen.dart';
@@ -83,16 +82,6 @@ class _PreviewWidgets extends StatelessWidget {
           },
         ),
         const SizedBox(height: 10),
-        SwitchButton(
-          isActive: true,
-          onPressed: () {},
-        ),
-        const SizedBox(height: 10),
-        SwitchButton(
-          isActive: false,
-          onPressed: () {},
-        ),
-        const SizedBox(height: 10),
         const Field(
           hintText: 'Test',
           fieldType: FieldType.text,
@@ -116,7 +105,7 @@ class _PreviewWidgets extends StatelessWidget {
               Button(
                 onPressed: () {},
                 child: const SvgWidget(
-                  Assets.trash,
+                  Assets.star,
                   color: Colors.black,
                 ),
               ),

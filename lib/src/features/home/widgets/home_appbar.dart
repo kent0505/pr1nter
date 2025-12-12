@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants.dart';
+import '../../../core/widgets/icon_btn.dart';
 import '../../vip/screens/vip_icon_button.dart';
 
 class HomeAppbar extends StatelessWidget {
@@ -17,10 +19,14 @@ class HomeAppbar extends StatelessWidget {
         right: 16,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           child,
+          const Spacer(),
           const SizedBox(width: 8),
+          IconBtn(
+            asset: Assets.info,
+            onPressed: () {},
+          ),
           const VipIconButton(),
         ],
       ),

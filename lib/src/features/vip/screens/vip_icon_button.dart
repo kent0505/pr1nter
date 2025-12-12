@@ -13,7 +13,7 @@ class VipIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconBtn(
-      asset: Assets.settings,
+      asset: Assets.vip,
       onPressed: context.read<VipBloc>().state.isVip
           ? null
           : () {

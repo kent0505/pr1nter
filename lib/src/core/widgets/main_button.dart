@@ -28,8 +28,8 @@ class MainButton extends StatelessWidget {
       height: 56,
       width: width,
       decoration: BoxDecoration(
-        color: color ?? (active ? colors.accent : colors.tertiary4),
-        borderRadius: BorderRadius.circular(20),
+        color: color ?? (active ? colors.accent : colors.text2),
+        borderRadius: BorderRadius.circular(56),
       ),
       child: Button(
         onPressed: onPressed,
@@ -42,9 +42,9 @@ class MainButton extends StatelessWidget {
                 color: color == null
                     ? active
                         ? colors.bg
-                        : colors.text2
+                        : colors.text3
                     : colors.text,
-                fontSize: 16,
+                fontSize: 18,
                 fontFamily: AppFonts.w700,
               ),
             ),

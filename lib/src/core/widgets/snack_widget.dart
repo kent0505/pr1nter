@@ -22,7 +22,7 @@ class SnackWidget {
               vertical: 16,
             ),
             decoration: BoxDecoration(
-              color: colors.tertiary4,
+              color: colors.tertiary2,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(

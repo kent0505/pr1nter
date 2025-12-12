@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
-import '../../../core/widgets/dialog_widget.dart';
 import '../../home/widgets/home_appbar.dart';
 import '../widgets/settings_tile.dart';
 
@@ -16,11 +14,11 @@ class SettingsScreen extends StatelessWidget {
 
     return Column(
       children: [
-        const HomeAppbar(
+        HomeAppbar(
           child: Text(
             'Settings',
             style: TextStyle(
-              color: Colors.black,
+              color: colors.text,
               fontSize: 32,
               fontFamily: AppFonts.w700,
             ),
@@ -34,45 +32,50 @@ class SettingsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 children: [
                   SettingsTile(
-                    title: 'Privacy Policy',
-                    asset: Assets.settings,
+                    title: 'Privacy policy',
+                    asset: Assets.privacy,
                     onPressed: () async {
                       await launchURL(Urls.privacy);
                     },
                   ),
                   SettingsTile(
-                    title: 'Terms of Use',
-                    asset: Assets.settings,
+                    title: 'Terms & conditions',
+                    asset: Assets.terms,
                     onPressed: () async {
                       await launchURL(Urls.terms);
                     },
                   ),
                   SettingsTile(
-                    title: 'Rate Us',
-                    asset: Assets.settings,
+                    title: 'Share app',
+                    asset: Assets.share,
                     onPressed: () async {},
                   ),
                   SettingsTile(
-                    title: 'Share App',
-                    asset: Assets.settings,
+                    title: 'Contact us',
+                    asset: Assets.contact,
+                    onPressed: () async {},
+                  ),
+                  SettingsTile(
+                    title: 'Rate us',
+                    asset: Assets.star,
                     onPressed: () {
-                      DialogWidget.show(
-                        context,
-                        title: 'Purchase Cancelled',
-                        buttonTexts: ['OK', 'OK'],
-                        buttonColors: [
-                          colors.tertiary3,
-                          colors.tertiary3,
-                        ],
-                        onPresseds: [
-                          () {
-                            context.pop();
-                          },
-                          () {
-                            context.pop();
-                          },
-                        ],
-                      );
+                      // DialogWidget.show(
+                      //   context,
+                      //   title: 'Purchase Cancelled',
+                      //   buttonTexts: ['OK', 'OK'],
+                      //   buttonColors: [
+                      //     colors.tertiary2,
+                      //     colors.tertiary2,
+                      //   ],
+                      //   onPresseds: [
+                      //     () {
+                      //       context.pop();
+                      //     },
+                      //     () {
+                      //       context.pop();
+                      //     },
+                      //   ],
+                      // );
                     },
                   ),
                 ],
