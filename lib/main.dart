@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 import 'src/core/router.dart';
 import 'src/core/themes.dart';
-import 'src/core/utils.dart';
 import 'src/features/onboard/data/onboard_repository.dart';
 import 'src/features/internet/bloc/internet_bloc.dart';
 import 'src/features/home/bloc/home_bloc.dart';
-import 'src/features/test/data/test_repository.dart';
-import 'src/features/test/models/test.dart';
 import 'src/features/vip/bloc/vip_bloc.dart';
 import 'src/features/vip/data/vip_repository.dart';
 
@@ -32,18 +27,6 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   // await prefs.clear();
 
-  final path = join(await getDatabasesPath(), 'data.db');
-  // await deleteDatabase(path);
-
-  final db = await openDatabase(
-    path,
-    version: 1,
-    onCreate: (db, version) async {
-      logger('CREATE');
-      await db.execute(Test.create);
-    },
-  );
-
   runApp(
     MultiRepositoryProvider(
       providers: [
@@ -52,9 +35,6 @@ void main() async {
         ),
         RepositoryProvider<VipRepository>(
           create: (context) => VipRepositoryImpl(prefs: prefs),
-        ),
-        RepositoryProvider<TestRepository>(
-          create: (context) => TestRepositoryImpl(db: db),
         ),
       ],
       child: MultiBlocProvider(

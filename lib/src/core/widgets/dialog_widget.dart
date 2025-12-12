@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../utils.dart';
 import 'main_button.dart';
-import 'snack_widget.dart';
 
 class DialogWidget extends StatelessWidget {
   const DialogWidget({
@@ -30,10 +30,7 @@ class DialogWidget extends StatelessWidget {
         buttonTexts.length > 2 ||
         buttonTexts.length != buttonColors.length &&
             buttonTexts.length != onPresseds.length) {
-      return SnackWidget.show(
-        context,
-        message: 'Length mismatch',
-      );
+      return logger('Length mismatch');
     }
 
     showDialog(

@@ -1,8 +1,16 @@
 import 'dart:developer' as developer;
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart';
+import 'package:printing/printing.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void logger(Object message) => developer.log(message.toString());
@@ -21,6 +29,40 @@ Future<String> pickImage() async {
   return image.path;
 }
 
+Future<String> pickFile() async {
+  final result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf', 'txt', 'png', 'jpg'],
+  );
+  return result?.files.single.path ?? '';
+}
+
+void shareFiles(List<File> files) async {
+  if (files.isEmpty) return;
+  await SharePlus.instance.share(
+    ShareParams(
+      sharePositionOrigin: const Rect.fromLTWH(100, 100, 200, 200),
+      files: List.generate(
+        files.length,
+        (index) {
+          return XFile(files[index].path);
+        },
+      ),
+    ),
+  );
+}
+
+void printPdf(Document pdf) {
+  try {
+    Printing.layoutPdf(
+      format: PdfPageFormat.a4,
+      onLayout: (PdfPageFormat format) async => await pdf.save(),
+    );
+  } catch (e) {
+    logger(e);
+  }
+}
+
 Future<void> launchURL(String url) async {
   try {
     final uri = Uri.parse(url);
@@ -32,37 +74,25 @@ Future<void> launchURL(String url) async {
   }
 }
 
-extension FirstWhereOrNullExtension<E> on Iterable<E> {
-  E? firstWhereOrNull(bool Function(E element) test) {
-    for (var element in this) {
-      if (test(element)) return element;
-    }
-    return null;
-  }
-}
-
-String timestampToString(int timestamp) {
-  DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-  return DateFormat('dd.MM.yyyy').format(date);
-}
-
-String dateToString(DateTime date) {
-  return DateFormat('dd.MM.yyyy').format(date);
-}
-
-String timeToString(DateTime time) {
-  return DateFormat('HH:mm').format(time);
-}
-
-DateTime stringToDate(String date) {
+Future<Uint8List> getBytes(ScreenshotController controller) async {
   try {
-    return DateFormat('dd.MM.yyyy').parse(date);
+    final bytes = await controller.capture();
+    if (bytes == null) throw Exception('null bytes');
+    return bytes;
   } catch (e) {
     logger(e);
-    return DateTime.now();
+    return Uint8List(0);
   }
 }
 
-String formatNumber(int number) {
-  return NumberFormat('#,###').format(number);
+Future<File> getFile(Uint8List bytes) async {
+  try {
+    final dir = await getTemporaryDirectory();
+    final file = File('${dir.path}/printable.png');
+    await file.writeAsBytes(bytes);
+    return file;
+  } catch (e) {
+    logger(e);
+    return File('');
+  }
 }

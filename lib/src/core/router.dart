@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 
 import '../features/home/screens/home_screen.dart';
 import '../features/onboard/screens/onboard_screen.dart';
+import '../features/printer/screens/printables_screen.dart';
 import '../features/settings/screens/connect_screen.dart';
 import '../features/splash/screens/splash_screen.dart';
 import '../features/vip/screens/vip_screen.dart';
@@ -20,6 +21,12 @@ final routerConfig = GoRouter(
     GoRoute(
       path: HomeScreen.routePath,
       builder: (context, state) => const HomeScreen(),
+    ),
+
+    // printer
+    GoRoute(
+      path: PrintablesScreen.routePath,
+      builder: (context, state) => const PrintablesScreen(),
     ),
 
     // settings
