@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/widgets/image_widget.dart';
 import '../../../core/widgets/main_button.dart';
-import '../../home/screens/home_screen.dart';
-import '../data/onboard_repository.dart';
+import 'printer_model_screen.dart';
 
 class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
@@ -18,15 +17,14 @@ class OnboardScreen extends StatefulWidget {
 }
 
 class _OnboardScreenState extends State<OnboardScreen> {
-  int index = 0;
-
   final pageController = PageController();
 
-  void onNext() async {
+  int index = 0;
+
+  void onNext() {
     if (index == 2) {
-      await context.read<OnboardRepository>().removeOnboard();
       if (mounted) {
-        context.replace(HomeScreen.routePath);
+        context.replace(PrinterModelScreen.routePath);
       }
     } else {
       pageController.nextPage(
@@ -55,25 +53,38 @@ class _OnboardScreenState extends State<OnboardScreen> {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<MyColors>()!;
 
+    const padding = 254.0;
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 254),
+            padding: const EdgeInsets.only(
+              top: 0,
+            ),
             child: PageView(
               controller: pageController,
               onPageChanged: onPageChanged,
               children: const [
-                Center(child: Text('1')),
-                Center(child: Text('2')),
-                Center(child: Text('3')),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 48),
+                  child: ImageWidget(asset: Assets.onboard1),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 48),
+                  child: ImageWidget(asset: Assets.onboard2),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 48),
+                  child: ImageWidget(asset: Assets.onboard3),
+                ),
               ],
             ),
           ),
           if (index != 3)
             Container(
-              height: 254,
+              height: padding,
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
@@ -90,54 +101,62 @@ class _OnboardScreenState extends State<OnboardScreen> {
                         dotHeight: 8,
                         dotWidth: 8,
                         spacing: 4,
-                        dotColor: colors.tertiary2,
+                        dotColor: colors.text2,
                         activeDotColor: colors.accent,
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    switch (index) {
-                      0 => 'Aaa',
-                      1 => 'Bbb',
-                      2 => 'Ccc',
-                      int() => '',
-                    },
-                    style: TextStyle(
-                      color: colors.text,
-                      fontSize: 26,
-                      fontFamily: AppFonts.w700,
+                  Center(
+                    child: Text(
+                      switch (index) {
+                        0 => 'All Your Documents in One Place',
+                        1 => 'Import Files Instantly',
+                        2 => 'Scan with Your Camera',
+                        int() => '',
+                      },
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 32,
+                        fontFamily: AppFonts.w700,
+                        height: 1.1,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    switch (index) {
-                      0 => 'Aaa aaa',
-                      1 => 'Bbb bbb',
-                      2 => 'Ccc ccc',
-                      int() => '',
-                    },
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: colors.text2,
-                      fontSize: 14,
-                      fontFamily: AppFonts.w500,
+                  Center(
+                    child: Text(
+                      switch (index) {
+                        0 =>
+                          'Organize, view, and manage your files effortlessly from a single home screen.',
+                        1 =>
+                          'Select documents from your device in just a few taps — fast, simple, and secure.',
+                        2 =>
+                          'Turn paper documents into high-quality digital files using your phone’s camera.',
+                        int() => '',
+                      },
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: colors.text3,
+                        fontSize: 16,
+                        fontFamily: AppFonts.w500,
+                      ),
                     ),
                   ),
                   const Spacer(),
+                  MainButton(
+                    title: 'Continue',
+                    onPressed: onNext,
+                  ),
+                  SizedBox(
+                    height: 16 + MediaQuery.of(context).viewPadding.bottom,
+                  ),
                 ],
               ),
             ),
-          Positioned(
-            bottom: 44,
-            left: 16,
-            right: 16,
-            child: MainButton(
-              title: 'Continue',
-              onPressed: onNext,
-            ),
-          ),
         ],
       ),
     );

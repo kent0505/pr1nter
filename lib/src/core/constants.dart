@@ -15,6 +15,7 @@ abstract final class Constants {
 }
 
 abstract final class Assets {
+  // icons
   static const String back = 'assets/icons/back.svg';
   static const String back2 = 'assets/icons/back2.svg';
   static const String checkbox = 'assets/icons/checkbox.svg';
@@ -34,6 +35,7 @@ abstract final class Assets {
   static const String touch = 'assets/icons/touch.svg';
   static const String vip = 'assets/icons/vip.svg';
 
+  // home
   static const String home1 = 'assets/home/1.svg';
   static const String home2 = 'assets/home/2.svg';
   static const String home3 = 'assets/home/3.svg';
@@ -45,6 +47,31 @@ abstract final class Assets {
   static const String home9 = 'assets/home/9.svg';
   static const String home10 = 'assets/home/10.svg';
 
+  // onboard
+  static const String onboard1 = 'assets/onboard/1.png';
+  static const String onboard2 = 'assets/onboard/2.png';
+  static const String onboard3 = 'assets/onboard/3.png';
+
+  // printables
+  static const String calendar1 = 'assets/printables/calendar1.png';
+  static const String calendar2 = 'assets/printables/calendar2.png';
+  static const String calendar3 = 'assets/printables/calendar3.png';
+  static const String calendar4 = 'assets/printables/calendar4.png';
+  static const String calendar5 = 'assets/printables/calendar5.png';
+  static const String calendar6 = 'assets/printables/calendar6.png';
+  static const String gift1 = 'assets/printables/gift1.svg';
+  static const String gift2 = 'assets/printables/gift2.svg';
+  static const String gift3 = 'assets/printables/gift3.svg';
+  static const String gift4 = 'assets/printables/gift4.svg';
+  static const String gift5 = 'assets/printables/gift5.svg';
+  static const String gift6 = 'assets/printables/gift6.svg';
+  static const String planner1 = 'assets/printables/planner1.png';
+  static const String planner2 = 'assets/printables/planner2.png';
+  static const String planner3 = 'assets/printables/planner3.png';
+  static const String planner4 = 'assets/printables/planner4.png';
+  static const String planner5 = 'assets/printables/planner5.png';
+  static const String planner6 = 'assets/printables/planner6.png';
+
   static const String power = 'assets/power.png';
   static const String router = 'assets/router.png';
   static const String wifi = 'assets/wifi.png';
@@ -52,6 +79,7 @@ abstract final class Assets {
 
 abstract final class Keys {
   static const String onboard = 'onboard';
+  static const String model = 'model';
   static const String free = 'free';
 }
 
