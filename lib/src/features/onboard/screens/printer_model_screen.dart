@@ -21,6 +21,7 @@ class PrinterModelScreen extends StatefulWidget {
 
 class _PrinterModelScreenState extends State<PrinterModelScreen> {
   final modelController = TextEditingController();
+  final focusNode = FocusNode();
 
   List<String> models = [
     'HP DesckJet',
@@ -39,6 +40,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
     setState(() {
       model == value ? model = '' : model = value;
     });
+    if (model == 'Other') focusNode.requestFocus();
   }
 
   void onContinue() async {
@@ -62,6 +64,9 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<MyColors>()!;
+
+    final canContinue =
+        model == 'Other' ? modelController.text.isNotEmpty : model.isNotEmpty;
 
     return Scaffold(
       body: Column(
@@ -109,6 +114,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                 if (model == 'Other')
                   Field(
                     controller: modelController,
+                    focusNode: focusNode,
                     hintText: 'Enter your printer model',
                     fieldType: FieldType.text,
                     onChanged: (_) {
@@ -122,13 +128,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
             children: [
               MainButton(
                 title: 'Continue',
-                onPressed: model == 'Other'
-                    ? modelController.text.isEmpty
-                        ? null
-                        : onContinue
-                    : model.isEmpty
-                        ? null
-                        : onContinue,
+                onPressed: canContinue ? onContinue : null,
               ),
             ],
           ),

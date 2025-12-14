@@ -16,6 +16,7 @@ class Field extends StatelessWidget {
   const Field({
     super.key,
     this.controller,
+    this.focusNode,
     required this.hintText,
     required this.fieldType,
     this.maxLength = 50,
@@ -28,6 +29,7 @@ class Field extends StatelessWidget {
   });
 
   final TextEditingController? controller;
+  final FocusNode? focusNode;
   final String hintText;
   final FieldType fieldType;
   final int? maxLength;
@@ -60,6 +62,7 @@ class Field extends StatelessWidget {
 
     return TextField(
       controller: controller,
+      focusNode: focusNode,
       keyboardType: keyboardType,
       obscureText: fieldType == FieldType.password,
       readOnly: readOnly,
