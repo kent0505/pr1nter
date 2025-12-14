@@ -85,14 +85,11 @@ class _OnboardScreenState extends State<OnboardScreen> {
           if (index != 3)
             Container(
               height: padding,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
+              padding: const EdgeInsets.all(16),
               color: colors.tertiary2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 16),
                   Center(
                     child: SmoothPageIndicator(
                       controller: pageController,
@@ -150,9 +147,6 @@ class _OnboardScreenState extends State<OnboardScreen> {
                   MainButton(
                     title: 'Continue',
                     onPressed: onNext,
-                  ),
-                  SizedBox(
-                    height: 16 + MediaQuery.of(context).viewPadding.bottom,
                   ),
                 ],
               ),

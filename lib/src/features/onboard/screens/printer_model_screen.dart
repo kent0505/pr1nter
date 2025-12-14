@@ -21,6 +21,7 @@ class PrinterModelScreen extends StatefulWidget {
 
 class _PrinterModelScreenState extends State<PrinterModelScreen> {
   final modelController = TextEditingController();
+  final focusNode = FocusNode();
 
   List<String> models = [
     'HP DesckJet',
@@ -38,6 +39,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   void onModel(String value) {
     setState(() {
       model == value ? model = '' : model = value;
+      if (model == 'Other') focusNode.requestFocus();
     });
   }
 
@@ -56,6 +58,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   @override
   void dispose() {
     modelController.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 
@@ -109,6 +112,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                 if (model == 'Other')
                   Field(
                     controller: modelController,
+                    focusNode: focusNode,
                     hintText: 'Enter your printer model',
                     fieldType: FieldType.text,
                     onChanged: (_) {
