@@ -60,7 +60,7 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
           Container(
             alignment: Alignment.centerRight,
             height: appBarSize,
-            width: rightCount * 52,
+            width: rightCount * 44,
             child: right,
           ),
         ],

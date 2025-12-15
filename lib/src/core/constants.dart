@@ -61,10 +61,10 @@ abstract final class Assets {
   static const String calendar6 = 'assets/printables/calendar6.png';
   static const String gift1 = 'assets/printables/gift1.svg';
   static const String gift2 = 'assets/printables/gift2.svg';
-  static const String gift3 = 'assets/printables/gift3.svg';
-  static const String gift4 = 'assets/printables/gift4.svg';
-  static const String gift5 = 'assets/printables/gift5.svg';
-  static const String gift6 = 'assets/printables/gift6.svg';
+  static const String gift3 = 'assets/printables/gift3.png';
+  static const String gift4 = 'assets/printables/gift4.png';
+  static const String gift5 = 'assets/printables/gift5.png';
+  static const String gift6 = 'assets/printables/gift6.png';
   static const String planner1 = 'assets/printables/planner1.png';
   static const String planner2 = 'assets/printables/planner2.png';
   static const String planner3 = 'assets/printables/planner3.png';

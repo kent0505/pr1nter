@@ -6,6 +6,7 @@ import '../../../core/utils.dart';
 import '../../home/widgets/home_appbar.dart';
 import '../../vip/widgets/vip_icon_button.dart';
 import '../widgets/printer_tile.dart';
+import 'camera_screen.dart';
 import 'printables_screen.dart';
 
 class PrinterScreen extends StatelessWidget {
@@ -47,7 +48,18 @@ class PrinterScreen extends StatelessWidget {
                   asset: Assets.home2,
                   title: 'Photos',
                   description: 'Print photos from gallery',
-                  onPressed: () {},
+                  onPressed: () async {
+                    await pickImage().then(
+                      (value) {
+                        if (value.isNotEmpty && context.mounted) {
+                          context.push(
+                            CameraScreen.routePath,
+                            extra: value,
+                          );
+                        }
+                      },
+                    );
+                  },
                 ),
                 PrinterTile(
                   asset: Assets.home3,

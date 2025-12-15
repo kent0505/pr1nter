@@ -25,7 +25,6 @@ class TabWidget extends StatefulWidget {
 class _TabWidgetState extends State<TabWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -35,11 +34,6 @@ class _TabWidgetState extends State<TabWidget>
       animationDuration: const Duration(milliseconds: Constants.milliseconds),
       vsync: this,
     );
-    _tabController.addListener(() {
-      setState(() {
-        _selectedIndex = _tabController.index;
-      });
-    });
   }
 
   @override
@@ -55,9 +49,12 @@ class _TabWidgetState extends State<TabWidget>
     return Column(
       children: [
         Container(
-          height: 44,
-          padding: const EdgeInsets.all(4),
-          margin: const EdgeInsets.only(bottom: 8),
+          height: 36,
+          margin: const EdgeInsets.only(
+            bottom: 8,
+            left: 16,
+            right: 16,
+          ),
           decoration: BoxDecoration(
             color: colors.tertiary1,
             borderRadius: BorderRadius.circular(12),
@@ -66,18 +63,19 @@ class _TabWidgetState extends State<TabWidget>
             controller: _tabController,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: _tabController.index == _selectedIndex
-                  ? colors.tertiary2
-                  : null,
+              border: Border.all(
+                width: 1,
+                color: colors.accent,
+              ),
             ),
             labelStyle: TextStyle(
-              color: colors.accent,
-              fontSize: 14,
+              color: colors.text,
+              fontSize: 16,
               fontFamily: AppFonts.w500,
             ),
             unselectedLabelStyle: TextStyle(
-              color: colors.text2,
-              fontSize: 14,
+              color: colors.text,
+              fontSize: 16,
               fontFamily: AppFonts.w500,
             ),
             tabs: List.generate(
@@ -85,24 +83,15 @@ class _TabWidgetState extends State<TabWidget>
               (index) {
                 return Tab(
                   text: widget.titles[index],
-                  height: 36,
                 );
               },
             ),
           ),
         ),
         Expanded(
-          child: Container(
-            height: widget.height,
-            decoration: widget.decoration,
-            padding: widget.padding,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: TabBarView(
-                controller: _tabController,
-                children: widget.pages,
-              ),
-            ),
+          child: TabBarView(
+            controller: _tabController,
+            children: widget.pages,
           ),
         ),
       ],

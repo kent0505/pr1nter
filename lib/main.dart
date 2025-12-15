@@ -8,6 +8,7 @@ import 'src/core/themes.dart';
 import 'src/features/onboard/data/onboard_repository.dart';
 import 'src/features/internet/bloc/internet_bloc.dart';
 import 'src/features/home/bloc/home_bloc.dart';
+import 'src/features/printer/data/printer_repository.dart';
 import 'src/features/vip/bloc/vip_bloc.dart';
 import 'src/features/vip/data/vip_repository.dart';
 
@@ -35,6 +36,9 @@ void main() async {
         ),
         RepositoryProvider<VipRepository>(
           create: (context) => VipRepositoryImpl(prefs: prefs),
+        ),
+        RepositoryProvider<PrinterRepository>(
+          create: (context) => PrinterRepositoryImpl(),
         ),
       ],
       child: MultiBlocProvider(

@@ -29,7 +29,7 @@ class PrinterTile extends StatelessWidget {
     return Container(
       height: size,
       width: size,
-      // padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         color: colors.tertiary1,
         borderRadius: BorderRadius.circular(16),
@@ -43,7 +43,7 @@ class PrinterTile extends StatelessWidget {
               height: 98,
               child: SvgWidget(asset),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: 4),
             Text(
               title,
               style: TextStyle(

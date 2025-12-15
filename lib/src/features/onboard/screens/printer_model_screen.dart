@@ -39,7 +39,6 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   void onModel(String value) {
     setState(() {
       model == value ? model = '' : model = value;
-      if (model == 'Other') focusNode.requestFocus();
     });
     if (model == 'Other') focusNode.requestFocus();
   }

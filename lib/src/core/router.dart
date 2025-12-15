@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import '../features/home/screens/home_screen.dart';
 import '../features/onboard/screens/onboard_screen.dart';
 import '../features/onboard/screens/printer_model_screen.dart';
+import '../features/printer/screens/camera_screen.dart';
+import '../features/printer/screens/printable_detail_screen.dart';
 import '../features/printer/screens/printables_screen.dart';
 import '../features/settings/screens/connect_screen.dart';
 import '../features/splash/screens/splash_screen.dart';
@@ -34,6 +36,18 @@ final routerConfig = GoRouter(
     GoRoute(
       path: PrintablesScreen.routePath,
       builder: (context, state) => const PrintablesScreen(),
+    ),
+    GoRoute(
+      path: PrintableDetailScreen.routePath,
+      builder: (context, state) => PrintableDetailScreen(
+        asset: state.extra as String,
+      ),
+    ),
+    GoRoute(
+      path: CameraScreen.routePath,
+      builder: (context, state) => CameraScreen(
+        path: state.extra as String,
+      ),
     ),
 
     // settings

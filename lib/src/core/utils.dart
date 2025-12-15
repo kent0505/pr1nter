@@ -1,16 +1,11 @@
 import 'dart:developer' as developer;
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart';
-import 'package:printing/printing.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void logger(Object message) => developer.log(message.toString());
@@ -35,32 +30,6 @@ Future<String> pickFile() async {
     allowedExtensions: ['pdf', 'txt', 'png', 'jpg'],
   );
   return result?.files.single.path ?? '';
-}
-
-void shareFiles(List<File> files) async {
-  if (files.isEmpty) return;
-  await SharePlus.instance.share(
-    ShareParams(
-      sharePositionOrigin: const Rect.fromLTWH(100, 100, 200, 200),
-      files: List.generate(
-        files.length,
-        (index) {
-          return XFile(files[index].path);
-        },
-      ),
-    ),
-  );
-}
-
-void printPdf(Document pdf) {
-  try {
-    Printing.layoutPdf(
-      format: PdfPageFormat.a4,
-      onLayout: (PdfPageFormat format) async => await pdf.save(),
-    );
-  } catch (e) {
-    logger(e);
-  }
 }
 
 Future<void> launchURL(String url) async {
