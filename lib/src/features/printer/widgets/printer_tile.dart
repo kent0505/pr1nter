@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/svg_widget.dart';
+import '../../vip/screens/vip_screen.dart';
 
 class PrinterTile extends StatelessWidget {
   const PrinterTile({
@@ -10,12 +11,14 @@ class PrinterTile extends StatelessWidget {
     required this.asset,
     required this.title,
     required this.description,
+    this.locked = false,
     required this.onPressed,
   });
 
   final String asset;
   final String title;
   final String description;
+  final bool locked;
   final VoidCallback onPressed;
 
   @override
@@ -29,39 +32,60 @@ class PrinterTile extends StatelessWidget {
     return Container(
       height: size,
       width: size,
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 4,
+      ),
       decoration: BoxDecoration(
         color: colors.tertiary1,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Button(
-        onPressed: onPressed,
-        padding: const EdgeInsetsGeometry.all(12),
-        child: Column(
+        onPressed: locked
+            ? () {
+                VipScreen.open(context);
+              }
+            : onPressed,
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            SizedBox(
-              height: 98,
-              child: SvgWidget(asset),
+            Column(
+              children: [
+                SizedBox(
+                  height: 98,
+                  child: SvgWidget(asset),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: colors.text,
+                    fontSize: 16,
+                    fontFamily: AppFonts.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: colors.text,
+                    fontSize: 14,
+                    fontFamily: AppFonts.w500,
+                  ),
+                ),
+                const SizedBox(height: 8),
+              ],
             ),
-            const SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                color: colors.text,
-                fontSize: 16,
-                fontFamily: AppFonts.w700,
+            if (locked)
+              const Positioned(
+                top: 0,
+                right: 0,
+                child: SvgWidget(
+                  Assets.locked,
+                  height: 24,
+                ),
               ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              description,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: colors.text,
-                fontSize: 14,
-                fontFamily: AppFonts.w500,
-              ),
-            ),
           ],
         ),
       ),

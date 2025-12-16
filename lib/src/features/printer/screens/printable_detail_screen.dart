@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:screenshot/screenshot.dart';
@@ -14,7 +13,6 @@ import '../../../core/widgets/button.dart';
 import '../../../core/widgets/image_widget.dart';
 import '../../../core/widgets/main_button.dart';
 import '../../../core/widgets/svg_widget.dart';
-import '../data/printer_repository.dart';
 
 class PrintableDetailScreen extends StatefulWidget {
   const PrintableDetailScreen({super.key, required this.asset});
@@ -30,25 +28,27 @@ class PrintableDetailScreen extends StatefulWidget {
 class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
   final screenshotController = ScreenshotController();
 
-  Uint8List bytes = Uint8List(0);
-  File file = File('');
-  final pdf = pw.Document();
+  final document = pw.Document();
 
-  late PrinterRepository _repository;
+  Uint8List bytes = Uint8List(0);
+
+  late File file;
 
   void onShare() async {
-    await _repository.shareFiles([file]);
+    await shareFiles([file]);
   }
 
   void onPrint() async {
-    await _repository.printPdf(pdf);
+    await printDocument(document);
   }
 
-  void init() {
+  @override
+  void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       bytes = await getBytes(screenshotController);
       file = await getFile(bytes);
-      pdf.addPage(
+      document.addPage(
         pw.Page(
           margin: pw.EdgeInsets.zero,
           pageFormat: PdfPageFormat.a4,
@@ -64,13 +64,6 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
       );
       setState(() {});
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _repository = context.read<PrinterRepository>();
-    init();
   }
 
   @override

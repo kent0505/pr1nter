@@ -16,11 +16,13 @@ abstract final class Constants {
 
 abstract final class Assets {
   // icons
+  static const String add = 'assets/icons/add.svg';
   static const String back = 'assets/icons/back.svg';
   static const String back2 = 'assets/icons/back2.svg';
   static const String checkbox = 'assets/icons/checkbox.svg';
   static const String connect = 'assets/icons/connect.svg';
   static const String contact = 'assets/icons/contact.svg';
+  static const String copy = 'assets/icons/copy.svg';
   static const String info = 'assets/icons/info.svg';
   static const String locked = 'assets/icons/locked.svg';
   static const String printer = 'assets/icons/printer.svg';
@@ -86,5 +88,6 @@ abstract final class Keys {
 abstract final class Urls {
   static const String privacy = 'https://instagram.com';
   static const String terms = 'https://rezka.ag';
+  static const String dropbox = 'https://www.dropbox.com/';
   static const String contact = '';
 }
