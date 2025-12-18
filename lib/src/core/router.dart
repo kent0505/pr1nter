@@ -1,7 +1,8 @@
 import 'package:go_router/go_router.dart';
 
 import '../features/home/screens/home_screen.dart';
-import '../features/notes/screens/notes_screen.dart';
+import '../features/printer/models/preview.dart';
+import '../features/printer/screens/notes_screen.dart';
 import '../features/onboard/screens/onboard_screen.dart';
 import '../features/onboard/screens/printer_model_screen.dart';
 import '../features/printer/screens/preview_screen.dart';
@@ -49,8 +50,12 @@ final routerConfig = GoRouter(
     GoRoute(
       path: PreviewScreen.routePath,
       builder: (context, state) => PreviewScreen(
-        paths: state.extra as List<String>,
+        preview: state.extra as Preview,
       ),
+    ),
+    GoRoute(
+      path: NotesScreen.routePath,
+      builder: (context, state) => const NotesScreen(),
     ),
     GoRoute(
       path: WebScreen.routePath,
@@ -63,12 +68,6 @@ final routerConfig = GoRouter(
       builder: (context, state) => ScannerScreen(
         paths: state.extra as List<String>,
       ),
-    ),
-
-    // notes
-    GoRoute(
-      path: NotesScreen.routePath,
-      builder: (context, state) => const NotesScreen(),
     ),
 
     // settings

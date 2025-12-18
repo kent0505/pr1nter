@@ -45,8 +45,7 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      bytes = await getBytes(screenshotController);
-      file = await getFile(bytes);
+      file = await getFile(await getBytes(screenshotController));
       document = await buildDocument([file]);
       setState(() {});
     });

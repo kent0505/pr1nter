@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:printing/printing.dart';
@@ -11,13 +9,14 @@ import '../../../core/widgets/appbar.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/loading.dart';
 import '../../../core/widgets/svg_widget.dart';
+import '../models/preview.dart';
 
 class PreviewScreen extends StatefulWidget {
-  const PreviewScreen({super.key, required this.paths});
+  const PreviewScreen({super.key, required this.preview});
 
   static const routePath = '/PreviewScreen';
 
-  final List<String> paths;
+  final Preview preview;
 
   @override
   State<PreviewScreen> createState() => _PreviewScreenState();
@@ -31,27 +30,33 @@ class _PreviewScreenState extends State<PreviewScreen> {
   bool isPDF = false;
   bool isDocumentReady = false;
 
+  late Preview preview;
+
   void onPrint() async {
-    final bytes = isPDF
-        ? await File(widget.paths.first).readAsBytes()
-        : await document.save();
+    final bytes =
+        isPDF ? await preview.files.first.readAsBytes() : await document.save();
     await printDocument(bytes);
   }
 
   @override
   void initState() {
     super.initState();
+    preview = widget.preview;
 
-    isPDF = widget.paths.first.toLowerCase().endsWith('.pdf');
+    final path = preview.files.first.path.toLowerCase();
+
+    isPDF = path.endsWith('.pdf');
 
     if (isPDF) {
       controller = PdfController(
-        document: PdfDocument.openFile(widget.paths.first),
+        document: PdfDocument.openFile(preview.files.first.path),
       );
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         document = await buildDocument(
-          widget.paths.map((e) => File(e)).toList(),
+          preview.files,
+          txt: path.endsWith('.txt'),
+          path: preview.font,
         );
 
         setState(() {

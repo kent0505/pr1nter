@@ -18,6 +18,7 @@ class Field extends StatelessWidget {
     this.controller,
     this.focusNode,
     required this.hintText,
+    this.fontFamily = AppFonts.w600,
     required this.fieldType,
     this.maxLength = 50,
     this.readOnly = false,
@@ -31,6 +32,7 @@ class Field extends StatelessWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final String hintText;
+  final String fontFamily;
   final FieldType fieldType;
   final int? maxLength;
   final bool readOnly;
@@ -70,12 +72,12 @@ class Field extends StatelessWidget {
       enableInteractiveSelection: !readOnly,
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
-      minLines: fieldType == FieldType.multiline ? 1 : 1,
-      maxLines: fieldType == FieldType.multiline ? 8 : 1,
+      minLines: fieldType == FieldType.multiline ? 4 : 1,
+      maxLines: fieldType == FieldType.multiline ? null : 1,
       style: TextStyle(
         color: colors.text,
         fontSize: 16,
-        fontFamily: AppFonts.w600,
+        fontFamily: fontFamily,
       ),
       decoration: InputDecoration(
         hintText: hintText,

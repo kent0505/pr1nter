@@ -62,7 +62,6 @@ class Themes {
         fillColor: colors.bg,
         contentPadding: const EdgeInsets.symmetric(
           vertical: 10,
-          horizontal: 16,
         ),
         hintStyle: TextStyle(
           color: colors.text2,

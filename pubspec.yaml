@@ -65,3 +65,12 @@ flutter:
     - family: w700
       fonts:
         - asset: assets/fonts/WixMadeforText-Bold.ttf
+    - family: inter
+      fonts:
+        - asset: assets/fonts/inter.ttf
+    - family: sf
+      fonts:
+        - asset: assets/fonts/sf.ttf
+    - family: times
+      fonts:
+        - asset: assets/fonts/times.ttf

@@ -4,6 +4,9 @@ abstract final class AppFonts {
   static const String w500 = 'w500';
   static const String w600 = 'w600';
   static const String w700 = 'w700';
+  static const String inter = 'inter';
+  static const String sf = 'sf';
+  static const String times = 'times';
 }
 
 abstract final class Constants {

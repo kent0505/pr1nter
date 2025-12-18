@@ -1,9 +1,8 @@
 import 'dart:developer' as developer;
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart' show Rect;
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -18,22 +17,17 @@ void logger(Object message) => developer.log(message.toString());
 
 bool isIOS() => Platform.isIOS;
 
-Future<List<String>> pickImages() async {
+Future<List<File>> pickImages() async {
   final images = await ImagePicker().pickMultiImage(limit: 10);
-  return List.generate(
-    images.length,
-    (index) {
-      return images[index].path;
-    },
-  );
+  return images.map((e) => File(e.path)).toList();
 }
 
-Future<String> pickFile() async {
+Future<File> pickFile() async {
   final result = await FilePicker.platform.pickFiles(
     type: FileType.custom,
     allowedExtensions: ['pdf', 'txt', 'png', 'jpg'],
   );
-  return result?.files.single.path ?? '';
+  return File(result?.files.single.path ?? '');
 }
 
 Future<void> launchURL(String url) async {
@@ -61,7 +55,7 @@ Future<Uint8List> getBytes(ScreenshotController controller) async {
 Future<File> getFile(Uint8List bytes) async {
   try {
     final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/printable.png');
+    final file = File('${dir.path}/file.png');
     await file.writeAsBytes(bytes);
     return file;
   } catch (e) {
@@ -100,22 +94,44 @@ Future<void> shareFiles(List<File> files) async {
   }
 }
 
-Future<Document> buildDocument(List<File> files) async {
+Future<Document> buildDocument(
+  List<File> files, {
+  bool txt = false,
+  String path = '',
+}) async {
   final document = Document();
   try {
     for (final file in files) {
       final bytes = await normalizeImage(file);
+      String textContent = '';
+      Font? font;
+      if (txt) {
+        textContent = await file.readAsString();
+        if (path.isNotEmpty) {
+          font = Font.ttf(
+            await rootBundle.load(path),
+          );
+        }
+      }
       document.addPage(
         Page(
-          margin: EdgeInsets.zero,
+          margin: EdgeInsets.all(txt ? 32 : 0),
           pageFormat: PdfPageFormat.a4,
           build: (context) {
-            return Center(
-              child: Image(
-                MemoryImage(bytes),
-                fit: BoxFit.contain,
-              ),
-            );
+            return txt
+                ? Text(
+                    textContent,
+                    style: TextStyle(
+                      fontSize: 14,
+                      font: font,
+                    ),
+                  )
+                : Center(
+                    child: Image(
+                      MemoryImage(bytes),
+                      fit: BoxFit.contain,
+                    ),
+                  );
           },
         ),
       );

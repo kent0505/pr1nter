@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../home/widgets/home_appbar.dart';
-import '../../notes/screens/notes_screen.dart';
+import '../models/preview.dart';
+import 'notes_screen.dart';
 import '../../scanner/screens/scanner_screen.dart';
 import '../../vip/bloc/vip_bloc.dart';
 import '../../vip/widgets/vip_icon_button.dart';
@@ -24,11 +25,11 @@ class PrinterScreen extends StatefulWidget {
 class _PrinterScreenState extends State<PrinterScreen> {
   void onDocument() async {
     await pickFile().then(
-      (value) {
-        if (value.isNotEmpty && mounted) {
+      (file) {
+        if (file.path.isNotEmpty && mounted) {
           context.push(
             PreviewScreen.routePath,
-            extra: [value],
+            extra: Preview(files: [file]),
           );
         }
       },
@@ -36,11 +37,11 @@ class _PrinterScreenState extends State<PrinterScreen> {
   }
 
   void onPhotos() async {
-    await pickImages().then((paths) {
-      if (paths.isNotEmpty && mounted) {
+    await pickImages().then((files) {
+      if (files.isNotEmpty && mounted) {
         context.push(
           PreviewScreen.routePath,
-          extra: paths,
+          extra: Preview(files: files),
         );
       }
     });
