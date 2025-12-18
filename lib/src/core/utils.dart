@@ -70,11 +70,11 @@ Future<File> getFile(Uint8List bytes) async {
   }
 }
 
-Future<void> printDocument(Document document) async {
+Future<void> printDocument(Uint8List bytes) async {
   try {
     await Printing.layoutPdf(
       format: PdfPageFormat.a4,
-      onLayout: (PdfPageFormat format) async => await document.save(),
+      onLayout: (PdfPageFormat format) => bytes,
     );
   } catch (e) {
     logger(e);

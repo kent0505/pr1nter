@@ -9,7 +9,7 @@ import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/appbar.dart';
 import '../../../core/widgets/button.dart';
-import '../../../core/widgets/image_widget.dart';
+import '../../../core/widgets/img.dart';
 import '../../../core/widgets/main_button.dart';
 import '../../../core/widgets/svg_widget.dart';
 
@@ -38,7 +38,7 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
   }
 
   void onPrint() async {
-    await printDocument(document);
+    await printDocument(await document.save());
   }
 
   @override
@@ -80,7 +80,7 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
                       widget.asset,
                       width: MediaQuery.sizeOf(context).width,
                     )
-                  : ImageWidget(asset: widget.asset),
+                  : Img(asset: widget.asset),
             ),
           ),
           const Spacer(),

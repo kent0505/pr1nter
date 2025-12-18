@@ -2,15 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:cunning_document_scanner/cunning_document_scanner.dart';
-import 'package:flutter/services.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:pr1nter/src/core/widgets/snack.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/appbar.dart';
 import '../../../core/widgets/button.dart';
-import '../../../core/widgets/image_widget.dart';
-import '../../../core/widgets/snack.dart';
+import '../../../core/widgets/img.dart';
 import '../../../core/widgets/svg_widget.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -20,10 +18,20 @@ class ScannerScreen extends StatefulWidget {
 
   static const routePath = '/ScannerScreen';
 
-  static Future<List<String>> getPictures() async {
-    final scanned = await CunningDocumentScanner.getPictures();
-    if (scanned != null && scanned.isNotEmpty) {
-      return scanned;
+  static Future<List<String>> getPictures(BuildContext context) async {
+    try {
+      final scanned = await CunningDocumentScanner.getPictures();
+      if (scanned != null && scanned.isNotEmpty) {
+        return scanned;
+      }
+    } catch (e) {
+      logger(e);
+      if (context.mounted) {
+        Snack.show(
+          context,
+          'Camera permission not granted',
+        );
+      }
     }
     return [];
   }
@@ -35,26 +43,26 @@ class ScannerScreen extends StatefulWidget {
 class _ScannerScreenState extends State<ScannerScreen> {
   List<File> files = [];
 
-  final textRecognizer = TextRecognizer();
+  // final textRecognizer = TextRecognizer();
 
   void onCopy() async {
-    final recognizedText = await textRecognizer.processImage(
-      InputImage.fromFile(files.first),
-    );
-    final text = recognizedText.text;
-    if (text.isNotEmpty) {
-      await Clipboard.setData(ClipboardData(text: text));
-    }
-    if (mounted) {
-      Snack.show(
-        context,
-        text.isEmpty ? 'Text not found' : 'Text copied to clipboard',
-      );
-    }
+    // final recognizedText = await textRecognizer.processImage(
+    //   InputImage.fromFile(files.first),
+    // );
+    // final text = recognizedText.text;
+    // if (text.isNotEmpty) {
+    //   await Clipboard.setData(ClipboardData(text: text));
+    // }
+    // if (mounted) {
+    //   Snack.show(
+    //     context,
+    //     text.isEmpty ? 'Text not found' : 'Text copied to clipboard',
+    //   );
+    // }
   }
 
   void onAdd() async {
-    await ScannerScreen.getPictures().then((value) {
+    await ScannerScreen.getPictures(context).then((value) {
       for (String path in value) {
         files.add(File(path));
       }
@@ -67,7 +75,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
   }
 
   void onPrint() async {
-    await printDocument(await buildDocument(files));
+    final document = await buildDocument(files);
+    await printDocument(await document.save());
   }
 
   @override
@@ -83,7 +92,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   @override
   void dispose() {
-    textRecognizer.close();
+    // textRecognizer.close();
     super.dispose();
   }
 
@@ -111,8 +120,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
               itemBuilder: (context, index) {
                 return Image.file(
                   files[index],
-                  errorBuilder: ImageWidget.errorBuilder,
-                  frameBuilder: ImageWidget.frameBuilder,
+                  errorBuilder: Img.errorBuilder,
+                  frameBuilder: Img.frameBuilder,
                 );
               },
             ),

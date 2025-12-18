@@ -5,11 +5,12 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../home/widgets/home_appbar.dart';
+import '../../notes/screens/notes_screen.dart';
 import '../../scanner/screens/scanner_screen.dart';
 import '../../vip/bloc/vip_bloc.dart';
 import '../../vip/widgets/vip_icon_button.dart';
 import '../widgets/printer_tile.dart';
-import 'picked_screen.dart';
+import 'preview_screen.dart';
 import 'printables_screen.dart';
 import 'web_screen.dart';
 
@@ -26,7 +27,7 @@ class _PrinterScreenState extends State<PrinterScreen> {
       (value) {
         if (value.isNotEmpty && mounted) {
           context.push(
-            PickedScreen.routePath,
+            PreviewScreen.routePath,
             extra: [value],
           );
         }
@@ -38,7 +39,7 @@ class _PrinterScreenState extends State<PrinterScreen> {
     await pickImages().then((paths) {
       if (paths.isNotEmpty && mounted) {
         context.push(
-          PickedScreen.routePath,
+          PreviewScreen.routePath,
           extra: paths,
         );
       }
@@ -50,7 +51,7 @@ class _PrinterScreenState extends State<PrinterScreen> {
   }
 
   void onNotes() {
-    context.push(PrintablesScreen.routePath);
+    context.push(NotesScreen.routePath);
   }
 
   void onWeb() {
@@ -62,7 +63,7 @@ class _PrinterScreenState extends State<PrinterScreen> {
   }
 
   void onScanner() async {
-    await ScannerScreen.getPictures().then((value) {
+    await ScannerScreen.getPictures(context).then((value) {
       if (mounted && value.isNotEmpty) {
         context.push(
           ScannerScreen.routePath,

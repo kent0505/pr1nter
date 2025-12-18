@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/appbar.dart';
-import '../../../core/widgets/image_widget.dart';
+import '../../../core/widgets/img.dart';
 import '../../../core/widgets/svg_widget.dart';
 
 class ConnectScreen extends StatelessWidget {
@@ -68,7 +68,7 @@ class ConnectScreen extends StatelessWidget {
               Positioned(
                 top: 28,
                 left: 177,
-                child: ImageWidget(
+                child: Img(
                   asset: Assets.power,
                   height: 148,
                 ),
@@ -121,7 +121,7 @@ class ConnectScreen extends StatelessWidget {
               const Positioned(
                 top: 28,
                 left: 177,
-                child: ImageWidget(
+                child: Img(
                   asset: Assets.wifi,
                   height: 148,
                 ),
@@ -158,7 +158,7 @@ class ConnectScreen extends StatelessWidget {
                 top: -70,
                 left: 0,
                 right: 0,
-                child: ImageWidget(
+                child: Img(
                   asset: Assets.router,
                   height: 330,
                 ),
@@ -193,7 +193,7 @@ class ConnectScreen extends StatelessWidget {
               const Positioned(
                 top: 40,
                 left: 0,
-                child: ImageWidget(
+                child: Img(
                   asset: Assets.power,
                   height: 132,
                 ),
@@ -214,7 +214,7 @@ class ConnectScreen extends StatelessWidget {
                 top: 40,
                 left: 0,
                 right: 0,
-                child: ImageWidget(
+                child: Img(
                   asset: Assets.wifi,
                   height: 132,
                 ),
@@ -222,7 +222,7 @@ class ConnectScreen extends StatelessWidget {
               const Positioned(
                 top: 40,
                 right: 0,
-                child: ImageWidget(
+                child: Img(
                   asset: Assets.wifi,
                   height: 132,
                 ),

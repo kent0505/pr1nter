@@ -4,7 +4,7 @@ import '../features/home/screens/home_screen.dart';
 import '../features/notes/screens/notes_screen.dart';
 import '../features/onboard/screens/onboard_screen.dart';
 import '../features/onboard/screens/printer_model_screen.dart';
-import '../features/printer/screens/picked_screen.dart';
+import '../features/printer/screens/preview_screen.dart';
 import '../features/printer/screens/printable_detail_screen.dart';
 import '../features/printer/screens/printables_screen.dart';
 import '../features/printer/screens/web_screen.dart';
@@ -47,8 +47,8 @@ final routerConfig = GoRouter(
       ),
     ),
     GoRoute(
-      path: PickedScreen.routePath,
-      builder: (context, state) => PickedScreen(
+      path: PreviewScreen.routePath,
+      builder: (context, state) => PreviewScreen(
         paths: state.extra as List<String>,
       ),
     ),

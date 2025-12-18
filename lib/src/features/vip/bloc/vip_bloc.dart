@@ -32,21 +32,21 @@ class VipBloc extends Bloc<VipEvent, VipState> {
       emit(state.copyWith(loading: true));
 
       try {
-        final customerInfo = await Purchases.getCustomerInfo().timeout(
-          const Duration(seconds: 10),
-        );
+        // final customerInfo = await Purchases.getCustomerInfo().timeout(
+        //   const Duration(seconds: 10),
+        // );
 
-        final offerings = await Purchases.getOfferings().timeout(
-          const Duration(seconds: 10),
-        );
+        // final offerings = await Purchases.getOfferings().timeout(
+        //   const Duration(seconds: 10),
+        // );
 
-        final offering = offerings.getOffering('paywall_1');
+        // final offering = offerings.getOffering('paywall_1');
 
-        emit(state.copyWith(
-          loading: false,
-          isVip: customerInfo.entitlements.active.isNotEmpty,
-          offering: offering,
-        ));
+        // emit(state.copyWith(
+        //   loading: false,
+        //   isVip: customerInfo.entitlements.active.isNotEmpty,
+        //   offering: offering,
+        // ));
       } catch (e) {
         logger('Error checking vip: $e');
 

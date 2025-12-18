@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
 import '../../../core/widgets/appbar.dart';
 import '../../../core/widgets/button.dart';
-import '../../../core/widgets/image_widget.dart';
+import '../../../core/widgets/img.dart';
 import '../../../core/widgets/svg_widget.dart';
 import '../../../core/widgets/tab_widget.dart';
 import '../../vip/widgets/vip_icon_button.dart';
@@ -97,7 +97,7 @@ class _Card extends StatelessWidget {
       },
       child: SizedBox(
         width: MediaQuery.sizeOf(context).width / 2 - 20,
-        child: svg ? SvgWidget(asset) : ImageWidget(asset: asset),
+        child: svg ? SvgWidget(asset) : Img(asset: asset),
       ),
     );
   }

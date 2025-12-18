@@ -39,11 +39,8 @@ class _WebScreenState extends State<WebScreen> {
   void onPrint() async {
     await webViewController.takeScreenshot().then((bytes) async {
       if (bytes != null) {
-        await printDocument(
-          await buildDocument(
-            [await getFile(bytes)],
-          ),
-        );
+        final document = await buildDocument([await getFile(bytes)]);
+        await printDocument(await document.save());
       }
     });
   }

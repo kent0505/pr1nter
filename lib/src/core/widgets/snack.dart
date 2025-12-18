@@ -14,7 +14,6 @@ class Snack {
         elevation: 0,
         duration: const Duration(seconds: 2),
         backgroundColor: Colors.transparent,
-        margin: const EdgeInsets.only(bottom: 100),
         behavior: SnackBarBehavior.floating,
         content: Center(
           child: Container(
