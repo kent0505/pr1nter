@@ -2,9 +2,9 @@ import 'dart:developer' as developer;
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart' show Rect;
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -16,18 +16,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 void logger(Object message) => developer.log(message.toString());
 
-int getTimestamp() {
-  return DateTime.now().millisecondsSinceEpoch;
-}
+bool isIOS() => Platform.isIOS;
 
-bool isIOS() {
-  return Platform.isIOS;
-}
-
-Future<String> pickImage() async {
-  final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-  if (image == null) return '';
-  return image.path;
+Future<List<String>> pickImages() async {
+  final images = await ImagePicker().pickMultiImage(limit: 10);
+  return List.generate(
+    images.length,
+    (index) {
+      return images[index].path;
+    },
+  );
 }
 
 Future<String> pickFile() async {
@@ -72,11 +70,11 @@ Future<File> getFile(Uint8List bytes) async {
   }
 }
 
-Future<void> printDocument(Document pdf) async {
+Future<void> printDocument(Document document) async {
   try {
     await Printing.layoutPdf(
       format: PdfPageFormat.a4,
-      onLayout: (PdfPageFormat format) async => await pdf.save(),
+      onLayout: (PdfPageFormat format) async => await document.save(),
     );
   } catch (e) {
     logger(e);
@@ -102,32 +100,44 @@ Future<void> shareFiles(List<File> files) async {
   }
 }
 
-Future<List<String>> scan() async {
-  final scanned = await CunningDocumentScanner.getPictures();
-  if (scanned != null && scanned.isNotEmpty) {
-    return scanned;
-  }
-  return [];
-}
-
 Future<Document> buildDocument(List<File> files) async {
   final document = Document();
-  for (final file in files) {
-    final bytes = await file.readAsBytes();
-    document.addPage(
-      Page(
-        margin: EdgeInsets.zero,
-        pageFormat: PdfPageFormat.a4,
-        build: (context) {
-          return Center(
-            child: Image(
-              MemoryImage(bytes),
-              fit: BoxFit.contain,
-            ),
-          );
-        },
-      ),
-    );
+  try {
+    for (final file in files) {
+      final bytes = await normalizeImage(file);
+      document.addPage(
+        Page(
+          margin: EdgeInsets.zero,
+          pageFormat: PdfPageFormat.a4,
+          build: (context) {
+            return Center(
+              child: Image(
+                MemoryImage(bytes),
+                fit: BoxFit.contain,
+              ),
+            );
+          },
+        ),
+      );
+    }
+  } catch (e) {
+    logger(e);
   }
   return document;
+}
+
+Future<Uint8List> normalizeImage(File file) async {
+  final ext = file.path.toLowerCase();
+  if (ext.endsWith('.heic') || ext.endsWith('.heif')) {
+    final result = await FlutterImageCompress.compressWithFile(
+      file.path,
+      format: CompressFormat.png,
+      quality: 95,
+    );
+    if (result == null) {
+      throw Exception('Failed to convert HEIC image');
+    }
+    return result;
+  }
+  return await file.readAsBytes();
 }

@@ -88,6 +88,7 @@ abstract final class Keys {
 abstract final class Urls {
   static const String privacy = 'https://instagram.com';
   static const String terms = 'https://rezka.ag';
-  static const String dropbox = 'https://www.dropbox.com/';
   static const String contact = '';
+  static const String dropbox = 'https://www.dropbox.com/';
+  static const String drive = 'https://workspace.google.com/products/drive/';
 }

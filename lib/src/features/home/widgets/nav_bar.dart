@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
-import '../../../core/utils.dart';
 import '../../../core/widgets/svg_widget.dart';
 import '../../../core/widgets/button.dart';
 import '../../scanner/screens/scanner_screen.dart';
@@ -36,7 +35,7 @@ class NavBar extends StatelessWidget {
             title: 'Scanner',
             asset: Assets.scanner,
             onPressed: () async {
-              await scan().then((value) {
+              await ScannerScreen.getPictures().then((value) {
                 if (context.mounted && value.isNotEmpty) {
                   context.push(
                     ScannerScreen.routePath,

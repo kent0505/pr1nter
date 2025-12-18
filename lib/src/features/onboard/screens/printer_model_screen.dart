@@ -46,7 +46,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   void onContinue() async {
     context.read<OnboardRepository>()
       ..removeOnboard()
-      ..savePrinterModel(
+      ..savePrinter(
         model == 'Other' ? modelController.text : model,
       ).then((value) {
         if (mounted) {

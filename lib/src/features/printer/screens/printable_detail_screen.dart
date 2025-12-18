@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:screenshot/screenshot.dart';
 
@@ -28,7 +27,7 @@ class PrintableDetailScreen extends StatefulWidget {
 class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
   final screenshotController = ScreenshotController();
 
-  final document = pw.Document();
+  pw.Document document = pw.Document();
 
   Uint8List bytes = Uint8List(0);
 
@@ -48,20 +47,7 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       bytes = await getBytes(screenshotController);
       file = await getFile(bytes);
-      document.addPage(
-        pw.Page(
-          margin: pw.EdgeInsets.zero,
-          pageFormat: PdfPageFormat.a4,
-          build: (context) {
-            return pw.Center(
-              child: pw.Image(
-                pw.MemoryImage(bytes),
-                fit: pw.BoxFit.contain,
-              ),
-            );
-          },
-        ),
-      );
+      document = await buildDocument([file]);
       setState(() {});
     });
   }

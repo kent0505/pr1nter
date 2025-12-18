@@ -5,10 +5,10 @@ import '../../../core/constants.dart';
 abstract interface class OnboardRepository {
   const OnboardRepository();
 
-  bool isOnboard();
+  bool onboard();
   Future<void> removeOnboard();
-  String getPrinterModel();
-  Future<void> savePrinterModel(String model);
+  String getPrinter();
+  Future<void> savePrinter(String model);
 }
 
 final class OnboardRepositoryImpl implements OnboardRepository {
@@ -17,7 +17,7 @@ final class OnboardRepositoryImpl implements OnboardRepository {
   final SharedPreferences _prefs;
 
   @override
-  bool isOnboard() {
+  bool onboard() {
     return _prefs.getBool(Keys.onboard) ?? true;
   }
 
@@ -27,12 +27,12 @@ final class OnboardRepositoryImpl implements OnboardRepository {
   }
 
   @override
-  String getPrinterModel() {
+  String getPrinter() {
     return _prefs.getString(Keys.model) ?? '';
   }
 
   @override
-  Future<void> savePrinterModel(String model) async {
+  Future<void> savePrinter(String model) async {
     await _prefs.setString(Keys.model, model);
   }
 }

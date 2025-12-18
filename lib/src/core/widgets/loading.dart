@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-class LoadingWidget extends StatefulWidget {
-  const LoadingWidget({super.key});
+class Loading extends StatefulWidget {
+  const Loading({super.key});
 
   @override
-  State<LoadingWidget> createState() => _LoadingWidgetState();
+  State<Loading> createState() => _LoadingState();
 }
 
-class _LoadingWidgetState extends State<LoadingWidget> {
+class _LoadingState extends State<Loading> {
   int _index = 0;
   late Timer _timer;
 

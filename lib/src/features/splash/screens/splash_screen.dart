@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/widgets/loading_widget.dart';
+import '../../../core/widgets/loading.dart';
 import '../../home/screens/home_screen.dart';
 import '../../onboard/data/onboard_repository.dart';
 import '../../onboard/screens/onboard_screen.dart';
@@ -15,14 +15,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  void replace() {
-    if (context.read<OnboardRepository>().isOnboard()) {
-      context.replace(OnboardScreen.routePath);
-    } else {
-      context.replace(HomeScreen.routePath);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +22,11 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 2),
       () {
         if (mounted) {
-          replace();
+          if (context.read<OnboardRepository>().onboard()) {
+            context.replace(OnboardScreen.routePath);
+          } else {
+            context.replace(HomeScreen.routePath);
+          }
         }
       },
     );
@@ -39,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: LoadingWidget(),
+      body: Loading(),
     );
   }
 }

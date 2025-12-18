@@ -23,12 +23,13 @@ dependencies:
   path_provider: ^2.1.5
 
   pdf: ^3.11.3
+  pdfx: ^2.9.2
   photo_manager: ^3.8.3
   printing: ^5.14.2
   screenshot: ^3.0.0
-  permission_handler: ^12.0.1
   in_app_review: ^2.0.11
   flutter_inappwebview: ^6.1.5
+  flutter_image_compress: ^2.4.0
   # receive_sharing_intent: ^1.8.1
 
   # picker
@@ -37,7 +38,7 @@ dependencies:
 
   # scanner
   cunning_document_scanner: ^1.4.0
-  # google_mlkit_text_recognition: ^0.15.0
+  google_mlkit_text_recognition: ^0.15.0
 
   # vip
   purchases_flutter: ^9.10.0

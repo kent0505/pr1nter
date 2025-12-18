@@ -1,6 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import '../../../core/constants.dart';
@@ -40,22 +39,11 @@ class _WebScreenState extends State<WebScreen> {
   void onPrint() async {
     await webViewController.takeScreenshot().then((bytes) async {
       if (bytes != null) {
-        final document = pw.Document();
-        document.addPage(
-          pw.Page(
-            margin: pw.EdgeInsets.zero,
-            pageFormat: PdfPageFormat.a4,
-            build: (context) {
-              return pw.Center(
-                child: pw.Image(
-                  pw.MemoryImage(bytes),
-                  fit: pw.BoxFit.contain,
-                ),
-              );
-            },
+        await printDocument(
+          await buildDocument(
+            [await getFile(bytes)],
           ),
         );
-        await printDocument(document);
       }
     });
   }
@@ -117,7 +105,7 @@ class _WebScreenState extends State<WebScreen> {
                 Button(
                   onPressed: onReload,
                   child: Icon(
-                    Icons.refresh_rounded,
+                    CupertinoIcons.refresh,
                     color: colors.text,
                   ),
                 ),

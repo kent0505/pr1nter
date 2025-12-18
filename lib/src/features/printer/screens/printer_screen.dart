@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../home/widgets/home_appbar.dart';
+import '../../scanner/screens/scanner_screen.dart';
 import '../../vip/bloc/vip_bloc.dart';
 import '../../vip/widgets/vip_icon_button.dart';
 import '../widgets/printer_tile.dart';
-import 'camera_screen.dart';
+import 'picked_screen.dart';
 import 'printables_screen.dart';
 import 'web_screen.dart';
 
@@ -25,8 +26,8 @@ class _PrinterScreenState extends State<PrinterScreen> {
       (value) {
         if (value.isNotEmpty && mounted) {
           context.push(
-            CameraScreen.routePath,
-            extra: value,
+            PickedScreen.routePath,
+            extra: [value],
           );
         }
       },
@@ -34,11 +35,11 @@ class _PrinterScreenState extends State<PrinterScreen> {
   }
 
   void onPhotos() async {
-    await pickImage().then((path) {
-      if (path.isNotEmpty && mounted) {
+    await pickImages().then((paths) {
+      if (paths.isNotEmpty && mounted) {
         context.push(
-          CameraScreen.routePath,
-          extra: path,
+          PickedScreen.routePath,
+          extra: paths,
         );
       }
     });
@@ -58,6 +59,21 @@ class _PrinterScreenState extends State<PrinterScreen> {
 
   void onDropbox() async {
     await launchURL(Urls.dropbox);
+  }
+
+  void onScanner() async {
+    await ScannerScreen.getPictures().then((value) {
+      if (mounted && value.isNotEmpty) {
+        context.push(
+          ScannerScreen.routePath,
+          extra: value,
+        );
+      }
+    });
+  }
+
+  void onDrive() async {
+    await launchURL(Urls.drive);
   }
 
   @override
@@ -132,20 +148,20 @@ class _PrinterScreenState extends State<PrinterScreen> {
                       locked: locked,
                       onPressed: onWeb,
                     ),
-                    // PrinterTile(
-                    //   asset: Assets.home9,
-                    //   title: 'Scanner',
-                    //   description: 'Scan any document',
-                    //   // locked: locked,
-                    //   onPressed: onScanner,
-                    // ),
-                    // PrinterTile(
-                    //   asset: Assets.home10,
-                    //   title: 'Google drive',
-                    //   description: 'Print files from your account',
-                    //   locked: locked,
-                    //   onPressed: () {},
-                    // ),
+                    PrinterTile(
+                      asset: Assets.home9,
+                      title: 'Scanner',
+                      description: 'Scan any document',
+                      // locked: locked,
+                      onPressed: onScanner,
+                    ),
+                    PrinterTile(
+                      asset: Assets.home10,
+                      title: 'Google drive',
+                      description: 'Print files from your account',
+                      locked: locked,
+                      onPressed: onDrive,
+                    ),
                   ],
                 ),
               ),
