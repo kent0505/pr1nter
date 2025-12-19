@@ -23,6 +23,9 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   final modelController = TextEditingController();
   final focusNode = FocusNode();
 
+  bool personalizing = false;
+  bool finished = false;
+
   List<String> models = [
     'HP DesckJet',
     'HP OfficeJetPro',
@@ -44,15 +47,20 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   }
 
   void onContinue() async {
-    context.read<OnboardRepository>()
-      ..removeOnboard()
-      ..savePrinter(
-        model == 'Other' ? modelController.text : model,
-      ).then((value) {
-        if (mounted) {
-          context.replace(HomeScreen.routePath);
-        }
-      });
+    setState(() {
+      personalizing = true;
+    });
+    if (finished) {
+      context.read<OnboardRepository>()
+        ..removeOnboard()
+        ..savePrinter(
+          model == 'Other' ? modelController.text : model,
+        ).then((value) {
+          if (mounted) {
+            context.replace(HomeScreen.routePath);
+          }
+        });
+    }
   }
 
   @override
@@ -79,58 +87,135 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                 SizedBox(height: MediaQuery.of(context).viewPadding.top + 32),
                 const SvgWidget(Assets.printer2),
                 const SizedBox(height: 32),
-                Text(
-                  'Printer Model',
-                  style: TextStyle(
-                    color: colors.text,
-                    fontSize: 32,
-                    fontFamily: AppFonts.w700,
+                if (personalizing) ...[
+                  Text(
+                    finished
+                        ? 'Everything is set up!'
+                        : 'Personalizing the app',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 24,
+                      fontFamily: AppFonts.w700,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Please enter your printer model to continue',
-                  style: TextStyle(
-                    color: colors.text3,
-                    fontSize: 16,
-                    fontFamily: AppFonts.w500,
+                  const SizedBox(height: 8),
+                  Text(
+                    finished
+                        ? 'Let’s print your files'
+                        : 'It will just take a couple of seconds',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colors.text3,
+                      fontSize: 16,
+                      fontFamily: AppFonts.w500,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 32),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: List.generate(
-                    models.length,
-                    (index) {
-                      return _ModelCard(
-                        title: models[index],
-                        model: model,
-                        onPressed: onModel,
-                      );
-                    },
+                  const SizedBox(height: 8),
+                  const SvgWidget(
+                    Assets.checkbox,
+                    height: 78,
                   ),
-                ),
-                const SizedBox(height: 8),
-                if (model == 'Other')
-                  Field(
-                    controller: modelController,
-                    focusNode: focusNode,
-                    hintText: 'Enter your printer model',
-                    fieldType: FieldType.text,
-                    onChanged: (_) {
-                      setState(() {});
-                    },
+                ] else ...[
+                  Text(
+                    'Printer Model',
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 32,
+                      fontFamily: AppFonts.w700,
+                    ),
                   ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Please enter your printer model to continue',
+                    style: TextStyle(
+                      color: colors.text3,
+                      fontSize: 16,
+                      fontFamily: AppFonts.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: List.generate(
+                      models.length,
+                      (index) {
+                        return _ModelCard(
+                          title: models[index],
+                          model: model,
+                          onPressed: onModel,
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  if (model == 'Other')
+                    Field(
+                      controller: modelController,
+                      focusNode: focusNode,
+                      hintText: 'Enter your printer model',
+                      fieldType: FieldType.text,
+                      onChanged: (_) {
+                        setState(() {});
+                      },
+                    ),
+                ]
               ],
             ),
           ),
           ButtonWrapper(
             children: [
-              MainButton(
-                title: 'Continue',
-                onPressed: canContinue ? onContinue : null,
-              ),
+              if (personalizing) ...[
+                Text(
+                  '3%',
+                  style: TextStyle(
+                    color: colors.text,
+                    fontSize: 16,
+                    fontFamily: AppFonts.w500,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: colors.text2,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 100, // changes
+                        decoration: BoxDecoration(
+                          color: colors.text2,
+                          borderRadius: BorderRadius.circular(12),
+                          gradient: LinearGradient(
+                            colors: colors.gradient,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Searching for printers',
+                      style: TextStyle(
+                        color: colors.text3,
+                        fontSize: 12,
+                        fontFamily: AppFonts.w500,
+                      ),
+                    ),
+                  ],
+                )
+              ] else
+                MainButton(
+                  title: 'Continue',
+                  onPressed: canContinue ? onContinue : null,
+                ),
             ],
           ),
         ],
