@@ -1,4 +1,4 @@
-export './my_colors.dart';
+export 'my_colors.dart';
 
 abstract final class AppFonts {
   static const String w500 = 'w500';
@@ -89,9 +89,9 @@ abstract final class Keys {
 }
 
 abstract final class Urls {
-  static const String privacy = 'https://instagram.com';
-  static const String terms = 'https://rezka.ag';
-  static const String contact = '';
+  static const String privacy = 'https://instagram.com'; // change
+  static const String terms = 'https://rezka.ag'; // change
+  static const String contact = ''; // change
   static const String dropbox = 'https://www.dropbox.com/';
   static const String drive = 'https://workspace.google.com/products/drive/';
 }

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../home/widgets/home_appbar.dart';
-import '../../vip/widgets/vip_banner.dart';
+import '../../subscription/widgets/vip_banner.dart';
 import '../widgets/settings_tile.dart';
 import 'connect_screen.dart';
 

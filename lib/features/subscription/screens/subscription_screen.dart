@@ -5,14 +5,13 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
-import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/main_button.dart';
-import '../bloc/vip_bloc.dart';
+import '../bloc/subscription_bloc.dart';
 
-class VipScreen extends StatelessWidget {
-  const VipScreen({super.key});
+class PaywallScreen extends StatelessWidget {
+  const PaywallScreen({super.key});
 
-  static const routePath = '/VipScreen';
+  static const routePath = '/PaywallScreen';
 
   static Future<void> init() async {
     if (isIOS()) {
@@ -23,12 +22,12 @@ class VipScreen extends StatelessWidget {
   }
 
   static bool canOpen(BuildContext context) {
-    final state = context.read<VipBloc>().state;
-    return isIOS() && state.free <= 0 && !state.isVip;
+    final state = context.read<SubscriptionBloc>().state;
+    return isIOS() && state.free <= 0 && !state.subscribed;
   }
 
   static void open(BuildContext context) {
-    context.push(VipScreen.routePath);
+    context.push(PaywallScreen.routePath);
   }
 
   @override
@@ -36,7 +35,7 @@ class VipScreen extends StatelessWidget {
     final colors = Theme.of(context).extension<MyColors>()!;
 
     return Scaffold(
-      body: BlocBuilder<VipBloc, VipState>(
+      body: BlocBuilder<SubscriptionBloc, SubscriptionState>(
         builder: (context, state) {
           if (state.loading || state.offering == null) {
             return Center(
@@ -71,29 +70,18 @@ class VipScreen extends StatelessWidget {
             },
             onPurchaseCompleted: (customerInfo, storeTransaction) {
               context
-                  .read<VipBloc>()
+                  .read<SubscriptionBloc>()
                   .add(CheckPurchased(customerInfo: customerInfo));
               context.pop();
             },
             onRestoreCompleted: (customerInfo) {
               context
-                  .read<VipBloc>()
+                  .read<SubscriptionBloc>()
                   .add(CheckPurchased(customerInfo: customerInfo));
               context.pop();
             },
             onPurchaseCancelled: () {
               context.pop();
-              DialogWidget.show(
-                context,
-                title: 'Purchase Cancelled',
-                buttonTexts: ['OK'],
-                buttonColors: [colors.tertiary2],
-                onPresseds: [
-                  () {
-                    context.pop();
-                  },
-                ],
-              );
             },
             onPurchaseError: (e) {
               context.pop();

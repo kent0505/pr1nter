@@ -1,14 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:cunning_document_scanner/cunning_document_scanner.dart';
-import 'package:pr1nter/src/core/widgets/snack.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/appbar.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/img.dart';
+import '../../../core/widgets/snack.dart';
 import '../../../core/widgets/svg_widget.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -43,22 +45,22 @@ class ScannerScreen extends StatefulWidget {
 class _ScannerScreenState extends State<ScannerScreen> {
   List<File> files = [];
 
-  // final textRecognizer = TextRecognizer();
+  final textRecognizer = TextRecognizer();
 
   void onCopy() async {
-    // final recognizedText = await textRecognizer.processImage(
-    //   InputImage.fromFile(files.first),
-    // );
-    // final text = recognizedText.text;
-    // if (text.isNotEmpty) {
-    //   await Clipboard.setData(ClipboardData(text: text));
-    // }
-    // if (mounted) {
-    //   Snack.show(
-    //     context,
-    //     text.isEmpty ? 'Text not found' : 'Text copied to clipboard',
-    //   );
-    // }
+    final recognizedText = await textRecognizer.processImage(
+      InputImage.fromFile(files.first),
+    );
+    final text = recognizedText.text;
+    if (text.isNotEmpty) {
+      await Clipboard.setData(ClipboardData(text: text));
+    }
+    if (mounted) {
+      Snack.show(
+        context,
+        text.isEmpty ? 'Text not found' : 'Text copied to clipboard',
+      );
+    }
   }
 
   void onAdd() async {
@@ -92,7 +94,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   @override
   void dispose() {
-    // textRecognizer.close();
+    textRecognizer.close();
     super.dispose();
   }
 

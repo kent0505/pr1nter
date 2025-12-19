@@ -1,27 +1,27 @@
-part of 'vip_bloc.dart';
+part of 'subscription_bloc.dart';
 
-final class VipState {
+final class SubscriptionState {
   final bool loading;
-  final bool isVip;
+  final bool subscribed;
   final Offering? offering;
   final int free;
 
-  VipState({
+  SubscriptionState({
     this.loading = false,
-    this.isVip = false,
+    this.subscribed = false,
     this.offering,
     this.free = Constants.free,
   });
 
-  VipState copyWith({
+  SubscriptionState copyWith({
     bool? loading,
-    bool? isVip,
+    bool? subscribed,
     Offering? offering,
     int? free,
   }) {
-    return VipState(
+    return SubscriptionState(
       loading: loading ?? this.loading,
-      isVip: isVip ?? this.isVip,
+      subscribed: subscribed ?? this.subscribed,
       offering: offering ?? this.offering,
       free: free ?? this.free,
     );

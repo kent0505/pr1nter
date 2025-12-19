@@ -7,7 +7,7 @@ import '../../../core/widgets/button.dart';
 import '../../../core/widgets/img.dart';
 import '../../../core/widgets/svg_widget.dart';
 import '../../../core/widgets/tab_widget.dart';
-import '../../vip/widgets/vip_icon_button.dart';
+import '../../subscription/widgets/vip_icon_button.dart';
 import 'printable_detail_screen.dart';
 
 class PrintablesScreen extends StatelessWidget {

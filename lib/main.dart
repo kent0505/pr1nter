@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'src/core/router.dart';
-import 'src/core/themes.dart';
-import 'src/features/onboard/data/onboard_repository.dart';
-import 'src/features/home/bloc/home_bloc.dart';
-import 'src/features/vip/bloc/vip_bloc.dart';
-import 'src/features/vip/data/vip_repository.dart';
-import 'src/features/vip/screens/vip_screen.dart';
+import 'core/router.dart';
+import 'core/themes.dart';
+import 'features/onboard/data/onboard_repository.dart';
+import 'features/home/bloc/home_bloc.dart';
+import 'features/subscription/bloc/subscription_bloc.dart';
+import 'features/subscription/data/subscription_repository.dart';
+import 'features/subscription/screens/subscription_screen.dart';
 
 // final colors = Theme.of(context).extension<MyColors>()!;
 
@@ -22,10 +22,10 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await VipScreen.init();
+  await PaywallScreen.init();
 
   final prefs = await SharedPreferences.getInstance();
-  await prefs.clear();
+  // await prefs.clear();
 
   runApp(
     MultiRepositoryProvider(
@@ -33,17 +33,17 @@ void main() async {
         RepositoryProvider<OnboardRepository>(
           create: (context) => OnboardRepositoryImpl(prefs: prefs),
         ),
-        RepositoryProvider<VipRepository>(
-          create: (context) => VipRepositoryImpl(prefs: prefs),
+        RepositoryProvider<SubscriptionRepository>(
+          create: (context) => SubscriptionRepositoryImpl(prefs: prefs),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => HomeBloc()),
           BlocProvider(
-            create: (context) => VipBloc(
-              repository: context.read<VipRepository>(),
-            )..add(CheckVip()),
+            create: (context) => SubscriptionBloc(
+              repository: context.read<SubscriptionRepository>(),
+            )..add(CheckSubscription()),
           ),
         ],
         child: MaterialApp.router(

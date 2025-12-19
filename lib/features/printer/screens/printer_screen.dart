@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../home/widgets/home_appbar.dart';
+import '../../subscription/bloc/subscription_bloc.dart';
 import '../models/preview.dart';
 import 'notes_screen.dart';
 import '../../scanner/screens/scanner_screen.dart';
-import '../../vip/bloc/vip_bloc.dart';
-import '../../vip/widgets/vip_icon_button.dart';
+import '../../subscription/widgets/vip_icon_button.dart';
 import '../widgets/printer_tile.dart';
 import 'preview_screen.dart';
 import 'printables_screen.dart';
@@ -80,9 +80,9 @@ class _PrinterScreenState extends State<PrinterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VipBloc, VipState>(
+    return BlocBuilder<SubscriptionBloc, SubscriptionState>(
       builder: (context, state) {
-        final locked = state.offering != null && !state.isVip;
+        final locked = state.offering != null && !state.subscribed;
 
         return Column(
           children: [

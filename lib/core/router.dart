@@ -12,7 +12,7 @@ import '../features/printer/screens/web_screen.dart';
 import '../features/scanner/screens/scanner_screen.dart';
 import '../features/settings/screens/connect_screen.dart';
 import '../features/splash/screens/splash_screen.dart';
-import '../features/vip/screens/vip_screen.dart';
+import '../features/subscription/screens/subscription_screen.dart';
 
 final routerConfig = GoRouter(
   initialLocation: '/',
@@ -76,10 +76,10 @@ final routerConfig = GoRouter(
       builder: (context, state) => const ConnectScreen(),
     ),
 
-    // vip
+    // subscription
     GoRoute(
-      path: VipScreen.routePath,
-      builder: (context, state) => const VipScreen(),
+      path: PaywallScreen.routePath,
+      builder: (context, state) => const PaywallScreen(),
     ),
   ],
 );

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/svg_widget.dart';
-import '../../vip/screens/vip_screen.dart';
+import '../../subscription/screens/subscription_screen.dart';
 
 class PrinterTile extends StatelessWidget {
   const PrinterTile({
@@ -43,7 +43,7 @@ class PrinterTile extends StatelessWidget {
       child: Button(
         onPressed: locked
             ? () {
-                VipScreen.open(context);
+                PaywallScreen.open(context);
               }
             : onPressed,
         child: Stack(

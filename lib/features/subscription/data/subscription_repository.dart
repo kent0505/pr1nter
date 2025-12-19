@@ -2,15 +2,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/constants.dart';
 
-abstract interface class VipRepository {
-  const VipRepository();
+abstract interface class SubscriptionRepository {
+  const SubscriptionRepository();
 
   int getFree();
   Future<void> setFree(int free);
 }
 
-final class VipRepositoryImpl implements VipRepository {
-  VipRepositoryImpl({required SharedPreferences prefs}) : _prefs = prefs;
+final class SubscriptionRepositoryImpl implements SubscriptionRepository {
+  SubscriptionRepositoryImpl({required SharedPreferences prefs})
+      : _prefs = prefs;
 
   final SharedPreferences _prefs;
 

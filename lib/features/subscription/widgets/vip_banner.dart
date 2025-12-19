@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/constants.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/svg_widget.dart';
-import '../bloc/vip_bloc.dart';
-import '../screens/vip_screen.dart';
+import '../bloc/subscription_bloc.dart';
+import '../screens/subscription_screen.dart';
 
 class VipBanner extends StatelessWidget {
   const VipBanner({super.key});
@@ -70,10 +70,10 @@ class VipBanner extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Button(
-                onPressed: context.read<VipBloc>().state.isVip
+                onPressed: context.read<SubscriptionBloc>().state.subscribed
                     ? null
                     : () {
-                        VipScreen.open(context);
+                        PaywallScreen.open(context);
                       },
                 child: Center(
                   child: Text(

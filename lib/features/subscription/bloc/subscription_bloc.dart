@@ -4,29 +4,29 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
-import '../data/vip_repository.dart';
+import '../data/subscription_repository.dart';
 
-part 'vip_event.dart';
-part 'vip_state.dart';
+part 'subscription_event.dart';
+part 'subscription_state.dart';
 
-class VipBloc extends Bloc<VipEvent, VipState> {
-  final VipRepository _repository;
+class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
+  final SubscriptionRepository _repository;
 
-  VipBloc({required VipRepository repository})
+  SubscriptionBloc({required SubscriptionRepository repository})
       : _repository = repository,
-        super(VipState()) {
-    on<VipEvent>(
+        super(SubscriptionState()) {
+    on<SubscriptionEvent>(
       (event, emit) => switch (event) {
-        CheckVip() => _checkVip(event, emit),
+        CheckSubscription() => _checkSubscription(event, emit),
         CheckPurchased() => _checkPurchased(event, emit),
         UseFree() => _useFree(event, emit),
       },
     );
   }
 
-  void _checkVip(
-    CheckVip event,
-    Emitter<VipState> emit,
+  void _checkSubscription(
+    CheckSubscription event,
+    Emitter<SubscriptionState> emit,
   ) async {
     if (isIOS()) {
       emit(state.copyWith(loading: true));
@@ -44,18 +44,18 @@ class VipBloc extends Bloc<VipEvent, VipState> {
 
         // emit(state.copyWith(
         //   loading: false,
-        //   isVip: customerInfo.entitlements.active.isNotEmpty,
+        //   isSubscription: customerInfo.entitlements.active.isNotEmpty,
         //   offering: offering,
         // ));
       } catch (e) {
-        logger('Error checking vip: $e');
+        logger('Error checking Subscription: $e');
 
         emit(state.copyWith(loading: false));
       }
     } else {
       emit(state.copyWith(
         loading: false,
-        isVip: true,
+        subscribed: true,
         offering: null,
       ));
     }
@@ -63,15 +63,15 @@ class VipBloc extends Bloc<VipEvent, VipState> {
 
   void _checkPurchased(
     CheckPurchased event,
-    Emitter<VipState> emit,
+    Emitter<SubscriptionState> emit,
   ) {
-    final isVip = event.customerInfo.entitlements.active.isNotEmpty;
-    emit(state.copyWith(isVip: isVip));
+    final subscribed = event.customerInfo.entitlements.active.isNotEmpty;
+    emit(state.copyWith(subscribed: subscribed));
   }
 
   void _useFree(
     UseFree event,
-    Emitter<VipState> emit,
+    Emitter<SubscriptionState> emit,
   ) async {
     int free = _repository.getFree();
     free = free - 1;
