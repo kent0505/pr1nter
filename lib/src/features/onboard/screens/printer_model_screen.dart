@@ -184,14 +184,12 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                   ),
                   child: Row(
                     children: [
-                      Container(
-                        width: 100, // changes
+                      AnimatedContainer(
+                        duration: const Duration(seconds: 2),
+                        width: finished ? MediaQuery.of(context).size.width : 0,
                         decoration: BoxDecoration(
-                          color: colors.text2,
+                          gradient: LinearGradient(colors: colors.gradient),
                           borderRadius: BorderRadius.circular(12),
-                          gradient: LinearGradient(
-                            colors: colors.gradient,
-                          ),
                         ),
                       ),
                     ],

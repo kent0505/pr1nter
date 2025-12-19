@@ -9,6 +9,7 @@ import 'src/features/onboard/data/onboard_repository.dart';
 import 'src/features/home/bloc/home_bloc.dart';
 import 'src/features/vip/bloc/vip_bloc.dart';
 import 'src/features/vip/data/vip_repository.dart';
+import 'src/features/vip/screens/vip_screen.dart';
 
 // final colors = Theme.of(context).extension<MyColors>()!;
 
@@ -21,7 +22,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // await VipScreen.init();
+  await VipScreen.init();
 
   final prefs = await SharedPreferences.getInstance();
   // await prefs.clear();
