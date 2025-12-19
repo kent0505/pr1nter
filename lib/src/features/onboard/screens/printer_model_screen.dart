@@ -23,8 +23,8 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   final modelController = TextEditingController();
   final focusNode = FocusNode();
 
-  bool personalizing = false;
-  bool finished = false;
+  double progress = 0.0;
+  int status = 0;
 
   List<String> models = [
     'HP DesckJet',
@@ -39,6 +39,8 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
 
   String model = '';
 
+  bool finished = false;
+
   void onModel(String value) {
     setState(() {
       model == value ? model = '' : model = value;
@@ -47,19 +49,30 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
   }
 
   void onContinue() async {
-    setState(() {
-      personalizing = true;
-    });
-    if (finished) {
+    if (progress == 0) {
+      while (progress < 1) {
+        await Future.delayed(const Duration(milliseconds: 80));
+        if (mounted) {
+          setState(() {
+            progress += 0.01;
+            if (progress > 0.3) status = 1;
+            if (progress > 0.5) status = 2;
+            if (progress > 0.7) status = 3;
+          });
+        }
+      }
+      setState(() {
+        finished = true;
+      });
+    } else {
       context.read<OnboardRepository>()
         ..removeOnboard()
         ..savePrinter(
           model == 'Other' ? modelController.text : model,
-        ).then((value) {
-          if (mounted) {
-            context.replace(HomeScreen.routePath);
-          }
-        });
+        );
+      if (mounted) {
+        context.replace(HomeScreen.routePath);
+      }
     }
   }
 
@@ -87,7 +100,7 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                 SizedBox(height: MediaQuery.of(context).viewPadding.top + 32),
                 const SvgWidget(Assets.printer2),
                 const SizedBox(height: 32),
-                if (personalizing) ...[
+                if (progress != 0) ...[
                   Text(
                     finished
                         ? 'Everything is set up!'
@@ -112,9 +125,15 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const SvgWidget(
-                    Assets.checkbox,
-                    height: 78,
+                  AnimatedOpacity(
+                    opacity: finished ? 1 : 0,
+                    duration: const Duration(
+                      milliseconds: Constants.milliseconds,
+                    ),
+                    child: const SvgWidget(
+                      Assets.checkbox,
+                      height: 78,
+                    ),
                   ),
                 ] else ...[
                   Text(
@@ -166,9 +185,9 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
           ),
           ButtonWrapper(
             children: [
-              if (personalizing) ...[
+              if (progress > 0 && progress < 1) ...[
                 Text(
-                  '3%',
+                  '${(progress * 100).round()}%',
                   style: TextStyle(
                     color: colors.text,
                     fontSize: 16,
@@ -185,8 +204,9 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                   child: Row(
                     children: [
                       AnimatedContainer(
-                        duration: const Duration(seconds: 2),
-                        width: finished ? MediaQuery.of(context).size.width : 0,
+                        duration: const Duration(milliseconds: 80),
+                        width:
+                            (MediaQuery.sizeOf(context).width - 32) * progress,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(colors: colors.gradient),
                           borderRadius: BorderRadius.circular(12),
@@ -196,18 +216,35 @@ class _PrinterModelScreenState extends State<PrinterModelScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Searching for printers',
-                      style: TextStyle(
-                        color: colors.text3,
-                        fontSize: 12,
-                        fontFamily: AppFonts.w500,
+                SizedBox(
+                  height: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        switch (status) {
+                          0 => 'Searching for printers',
+                          1 => 'Searching for printers',
+                          2 => 'Optimizing',
+                          3 => 'Optimizing',
+                          _ => '',
+                        },
+                        style: TextStyle(
+                          color: colors.text3,
+                          fontSize: 12,
+                          fontFamily: AppFonts.w500,
+                        ),
                       ),
-                    ),
-                  ],
+                      if (status == 1 || status == 3)
+                        const Padding(
+                          padding: EdgeInsetsGeometry.only(left: 4),
+                          child: SvgWidget(
+                            Assets.checkbox,
+                            height: 16,
+                          ),
+                        ),
+                    ],
+                  ),
                 )
               ] else
                 MainButton(

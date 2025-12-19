@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/img.dart';
 import '../../../core/widgets/main_button.dart';
-import '../bloc/onboard_bloc.dart';
 import 'printer_model_screen.dart';
 
 class OnboardScreen extends StatefulWidget {
@@ -21,10 +19,9 @@ class OnboardScreen extends StatefulWidget {
 class _OnboardScreenState extends State<OnboardScreen> {
   final pageController = PageController();
 
-  void onNext() {
-    final bloc = context.read<OnboardBloc>();
-    int index = bloc.state.index;
+  int index = 0;
 
+  void onNext() {
     if (index == 2) {
       if (mounted) {
         context.replace(PrinterModelScreen.routePath);
@@ -34,13 +31,16 @@ class _OnboardScreenState extends State<OnboardScreen> {
         duration: const Duration(milliseconds: Constants.milliseconds),
         curve: Curves.easeInOut,
       );
-
-      index++;
+      setState(() {
+        index++;
+      });
     }
   }
 
   void onPageChanged(int value) {
-    context.read<OnboardBloc>().add(ChangeOnboard(index: value));
+    setState(() {
+      index = value;
+    });
   }
 
   @override
@@ -80,83 +80,72 @@ class _OnboardScreenState extends State<OnboardScreen> {
               ],
             ),
           ),
-          BlocProvider(
-            create: (context) => OnboardBloc(),
-            child: Container(
-              height: padding,
-              padding: const EdgeInsets.all(16),
-              color: colors.tertiary2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: SmoothPageIndicator(
-                      controller: pageController,
-                      count: 3,
-                      effect: ExpandingDotsEffect(
-                        dotHeight: 8,
-                        dotWidth: 8,
-                        spacing: 4,
-                        dotColor: colors.text2,
-                        activeDotColor: colors.accent,
-                      ),
+          Container(
+            height: padding,
+            padding: const EdgeInsets.all(16),
+            color: colors.tertiary2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: SmoothPageIndicator(
+                    controller: pageController,
+                    count: 3,
+                    effect: ExpandingDotsEffect(
+                      dotHeight: 8,
+                      dotWidth: 8,
+                      spacing: 4,
+                      dotColor: colors.text2,
+                      activeDotColor: colors.accent,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  BlocBuilder<OnboardBloc, OnboardState>(
-                    builder: (context, state) {
-                      return Center(
-                        child: Text(
-                          switch (state.index) {
-                            0 => 'All Your Documents in One Place',
-                            1 => 'Import Files Instantly',
-                            2 => 'Scan with Your Camera',
-                            int() => '',
-                          },
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: colors.text,
-                            fontSize: 32,
-                            fontFamily: AppFonts.w700,
-                            height: 1.1,
-                          ),
-                        ),
-                      );
+                ),
+                const SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    switch (index) {
+                      0 => 'All Your Documents in One Place',
+                      1 => 'Import Files Instantly',
+                      2 => 'Scan with Your Camera',
+                      int() => '',
                     },
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 32,
+                      fontFamily: AppFonts.w700,
+                      height: 1.1,
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  BlocBuilder<OnboardBloc, OnboardState>(
-                    builder: (context, state) {
-                      return Center(
-                        child: Text(
-                          switch (state.index) {
-                            0 =>
-                              'Organize, view, and manage your files effortlessly from a single home screen.',
-                            1 =>
-                              'Select documents from your device in just a few taps — fast, simple, and secure.',
-                            2 =>
-                              'Turn paper documents into high-quality digital files using your phone’s camera.',
-                            int() => '',
-                          },
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: colors.text3,
-                            fontSize: 16,
-                            fontFamily: AppFonts.w500,
-                          ),
-                        ),
-                      );
+                ),
+                const SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    switch (index) {
+                      0 =>
+                        'Organize, view, and manage your files effortlessly from a single home screen.',
+                      1 =>
+                        'Select documents from your device in just a few taps — fast, simple, and secure.',
+                      2 =>
+                        'Turn paper documents into high-quality digital files using your phone’s camera.',
+                      int() => '',
                     },
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colors.text3,
+                      fontSize: 16,
+                      fontFamily: AppFonts.w500,
+                    ),
                   ),
-                  const Spacer(),
-                  MainButton(
-                    title: 'Continue',
-                    onPressed: onNext,
-                  ),
-                ],
-              ),
+                ),
+                const Spacer(),
+                MainButton(
+                  title: 'Continue',
+                  onPressed: onNext,
+                ),
+              ],
             ),
           ),
         ],

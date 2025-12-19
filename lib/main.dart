@@ -25,7 +25,7 @@ void main() async {
   await VipScreen.init();
 
   final prefs = await SharedPreferences.getInstance();
-  // await prefs.clear();
+  await prefs.clear();
 
   runApp(
     MultiRepositoryProvider(
