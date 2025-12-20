@@ -21,6 +21,7 @@ dependencies:
   printing: ^5.14.2
   url_launcher: ^6.3.2
   path_provider: ^2.1.5
+  permission_handler: ^12.0.1
   pdf: ^3.11.3
   pdfx: ^2.9.2
   photo_manager: ^3.8.3
@@ -30,7 +31,7 @@ dependencies:
   flutter_image_compress: ^2.4.0
   cunning_document_scanner: ^1.4.0
   google_mlkit_text_recognition: ^0.15.0
-  # receive_sharing_intent: ^1.8.1
+  receive_sharing_intent: ^1.8.1
 
   # picker
   image_picker: ^1.2.1

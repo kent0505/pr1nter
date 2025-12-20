@@ -7,6 +7,7 @@ import 'core/router.dart';
 import 'core/themes.dart';
 import 'features/onboard/data/onboard_repository.dart';
 import 'features/home/bloc/home_bloc.dart';
+import 'features/sharing/bloc/sharing_bloc.dart';
 import 'features/subscription/bloc/subscription_bloc.dart';
 import 'features/subscription/data/subscription_repository.dart';
 import 'features/subscription/screens/subscription_screen.dart';
@@ -39,7 +40,12 @@ void main() async {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => HomeBloc()),
+          BlocProvider(
+            create: (context) => HomeBloc(),
+          ),
+          BlocProvider(
+            create: (context) => SharingBloc()..add(ListenToShare()),
+          ),
           BlocProvider(
             create: (context) => SubscriptionBloc(
               repository: context.read<SubscriptionRepository>(),

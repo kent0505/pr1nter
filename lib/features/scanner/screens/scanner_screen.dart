@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils.dart';
@@ -22,12 +23,12 @@ class ScannerScreen extends StatefulWidget {
 
   static Future<List<String>> getPictures(BuildContext context) async {
     try {
+      await Permission.camera.request();
       final scanned = await CunningDocumentScanner.getPictures();
-      if (scanned != null && scanned.isNotEmpty) {
-        return scanned;
-      }
+      return scanned ?? [];
     } catch (e) {
-      logger(e);
+      logger('Get pictures error: $e');
+
       if (context.mounted) {
         Snack.show(
           context,

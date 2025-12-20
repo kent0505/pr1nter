@@ -64,7 +64,7 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
                 onPressed: onShare,
                 child: SvgWidget(
                   Assets.share,
-                  color: colors.text,
+                  color: colors.accent,
                 ),
               ),
       ),
