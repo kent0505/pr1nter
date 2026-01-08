@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cunning_document_scanner/cunning_document_scanner.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../core/constants.dart';
@@ -46,15 +45,15 @@ class ScannerScreen extends StatefulWidget {
 class _ScannerScreenState extends State<ScannerScreen> {
   List<File> files = [];
 
-  final textRecognizer = TextRecognizer();
+  // final textRecognizer = TextRecognizer();
 
   void onCopy() async {
-    final recognizedText = await textRecognizer.processImage(
-      InputImage.fromFile(files.first),
-    );
-    final text = recognizedText.text;
+    // final recognizedText = await textRecognizer.processImage(
+    //   InputImage.fromFile(files.first),
+    // );
+    const text = 'recognizedText.text';
     if (text.isNotEmpty) {
-      await Clipboard.setData(ClipboardData(text: text));
+      await Clipboard.setData(const ClipboardData(text: text));
     }
     if (mounted) {
       Snack.show(
@@ -95,7 +94,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   @override
   void dispose() {
-    textRecognizer.close();
+    // textRecognizer.close();
     super.dispose();
   }
 

@@ -7,13 +7,31 @@ import '../../printer/screens/preview_screen.dart';
 import '../../printer/screens/printer_screen.dart';
 import '../../settings/screens/settings_screen.dart';
 import '../../sharing/bloc/sharing_bloc.dart';
+import '../../subscription/data/subscription_repository.dart';
 import '../widgets/nav_bar.dart';
 import '../bloc/home_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static const routePath = '/HomeScreen';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 1), () {
+        if (mounted) {
+          context.read<SubscriptionRepository>().showPaywall();
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

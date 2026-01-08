@@ -1,4 +1,4 @@
-package com.example.pr1nter
+package com.pump.smart.print
 
 import io.flutter.embedding.android.FlutterActivity
 

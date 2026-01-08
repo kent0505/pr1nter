@@ -82,7 +82,7 @@ class _PrinterScreenState extends State<PrinterScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<SubscriptionBloc, SubscriptionState>(
       builder: (context, state) {
-        final locked = state.offering != null && !state.subscribed;
+        final locked = !state.subscribed;
 
         return Column(
           children: [

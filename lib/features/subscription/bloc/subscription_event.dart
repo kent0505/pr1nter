@@ -5,10 +5,6 @@ sealed class SubscriptionEvent {}
 
 final class CheckSubscription extends SubscriptionEvent {}
 
-final class CheckPurchased extends SubscriptionEvent {
-  CheckPurchased({required this.customerInfo});
-
-  final CustomerInfo customerInfo;
-}
+final class SetStatus extends SubscriptionEvent {}
 
 final class UseFree extends SubscriptionEvent {}

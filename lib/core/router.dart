@@ -12,7 +12,6 @@ import '../features/printer/screens/web_screen.dart';
 import '../features/scanner/screens/scanner_screen.dart';
 import '../features/settings/screens/connect_screen.dart';
 import '../features/splash/screens/splash_screen.dart';
-import '../features/subscription/screens/subscription_screen.dart';
 
 final routerConfig = GoRouter(
   initialLocation: '/',
@@ -74,12 +73,6 @@ final routerConfig = GoRouter(
     GoRoute(
       path: ConnectScreen.routePath,
       builder: (context, state) => const ConnectScreen(),
-    ),
-
-    // subscription
-    GoRoute(
-      path: PaywallScreen.routePath,
-      builder: (context, state) => const PaywallScreen(),
     ),
   ],
 );

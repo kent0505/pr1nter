@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/router.dart';
 import 'core/themes.dart';
+import 'core/utils.dart';
 import 'features/onboard/data/onboard_repository.dart';
 import 'features/home/bloc/home_bloc.dart';
 import 'features/sharing/bloc/sharing_bloc.dart';
 import 'features/subscription/bloc/subscription_bloc.dart';
 import 'features/subscription/data/subscription_repository.dart';
-import 'features/subscription/screens/subscription_screen.dart';
 
 // final colors = Theme.of(context).extension<MyColors>()!;
 
@@ -23,10 +24,19 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await PaywallScreen.init();
-
   final prefs = await SharedPreferences.getInstance();
   // await prefs.clear();
+
+  final adapty = Adapty();
+  try {
+    await adapty.activate(
+      configuration: AdaptyConfiguration(
+        apiKey: 'public_live_4SfeqTyU.Ejjofz3L4ib9jFd3hEhz',
+      )..withActivateUI(true),
+    );
+  } catch (e) {
+    logger(e);
+  }
 
   runApp(
     MultiRepositoryProvider(
@@ -35,7 +45,10 @@ void main() async {
           create: (context) => OnboardRepositoryImpl(prefs: prefs),
         ),
         RepositoryProvider<SubscriptionRepository>(
-          create: (context) => SubscriptionRepositoryImpl(prefs: prefs),
+          create: (context) => SubscriptionRepositoryImpl(
+            prefs: prefs,
+            adapty: adapty,
+          ),
         ),
       ],
       child: MultiBlocProvider(

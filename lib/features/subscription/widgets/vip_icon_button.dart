@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/icon_btn.dart';
-import '../screens/subscription_screen.dart';
+import '../data/subscription_repository.dart';
 
 class VipIconButton extends StatelessWidget {
   const VipIconButton({super.key});
@@ -12,7 +13,7 @@ class VipIconButton extends StatelessWidget {
     return IconBtn(
       asset: Assets.vip,
       onPressed: () {
-        PaywallScreen.open(context);
+        context.read<SubscriptionRepository>().showPaywall();
       },
     );
   }

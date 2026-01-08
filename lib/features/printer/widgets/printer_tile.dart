@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/svg_widget.dart';
-import '../../subscription/screens/subscription_screen.dart';
+import '../../subscription/data/subscription_repository.dart';
 
 class PrinterTile extends StatelessWidget {
   const PrinterTile({
@@ -43,7 +44,7 @@ class PrinterTile extends StatelessWidget {
       child: Button(
         onPressed: locked
             ? () {
-                PaywallScreen.open(context);
+                context.read<SubscriptionRepository>().showPaywall();
               }
             : onPressed,
         child: Stack(

@@ -5,7 +5,7 @@ import '../../../core/constants.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/svg_widget.dart';
 import '../bloc/subscription_bloc.dart';
-import '../screens/subscription_screen.dart';
+import '../data/subscription_repository.dart';
 
 class VipBanner extends StatelessWidget {
   const VipBanner({super.key});
@@ -73,7 +73,7 @@ class VipBanner extends StatelessWidget {
                 onPressed: context.read<SubscriptionBloc>().state.subscribed
                     ? null
                     : () {
-                        PaywallScreen.open(context);
+                        context.read<SubscriptionRepository>().showPaywall();
                       },
                 child: Center(
                   child: Text(
