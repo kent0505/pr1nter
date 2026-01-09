@@ -30,9 +30,11 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     CheckSubscription event,
     Emitter<SubscriptionState> emit,
   ) async {
-    Adapty().didUpdateProfileStream.listen((profile) {
+    final adapty = _repository.getAdapty();
+    adapty.didUpdateProfileStream.listen((profile) {
       _currentProfile = profile;
 
+      logger(profile.accessLevels);
       logger(profile.subscriptions);
 
       add(SetStatus());
@@ -54,7 +56,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   ) async {
     int free = _repository.getFree();
     free = free - 1;
-    logger('free = $free');
+    logger('free: $free');
     await _repository.setFree(free);
     emit(state.copyWith(free: free));
   }

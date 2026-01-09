@@ -31,7 +31,7 @@ dependencies:
   flutter_image_compress: ^2.4.0
   cunning_document_scanner: ^1.4.0
   # google_mlkit_text_recognition: ^0.15.0
-  receive_sharing_intent: ^1.8.1
+  # receive_sharing_intent: ^1.8.1
 
   # picker
   image_picker: ^1.2.1
