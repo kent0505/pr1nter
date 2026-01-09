@@ -5,6 +5,10 @@ sealed class SubscriptionEvent {}
 
 final class CheckSubscription extends SubscriptionEvent {}
 
-final class SetStatus extends SubscriptionEvent {}
+class ProfileUpdated extends SubscriptionEvent {
+  ProfileUpdated(this.profile);
+
+  final AdaptyProfile profile;
+}
 
 final class UseFree extends SubscriptionEvent {}

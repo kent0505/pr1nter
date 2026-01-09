@@ -31,7 +31,7 @@ void main() async {
     await adapty.activate(
       configuration: AdaptyConfiguration(
         apiKey: 'public_live_4SfeqTyU.Ejjofz3L4ib9jFd3hEhz',
-      )..withActivateUI(true),
+      ),
     );
   } catch (e) {
     logger(e);
