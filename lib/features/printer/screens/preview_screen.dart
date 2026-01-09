@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -9,6 +10,8 @@ import '../../../core/widgets/appbar.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/loading.dart';
 import '../../../core/widgets/svg_widget.dart';
+import '../../subscription/bloc/subscription_bloc.dart';
+import '../../subscription/data/subscription_repository.dart';
 import '../models/preview.dart';
 
 class PreviewScreen extends StatefulWidget {
@@ -33,9 +36,14 @@ class _PreviewScreenState extends State<PreviewScreen> {
   late Preview preview;
 
   void onPrint() async {
+    context.read<SubscriptionBloc>().add(UseFreeDoc());
     final bytes =
         isPDF ? await preview.files.first.readAsBytes() : await document.save();
     await printDocument(bytes);
+  }
+
+  void onShowPaywall() {
+    context.read<SubscriptionRepository>().showPaywall();
   }
 
   @override
@@ -76,11 +84,14 @@ class _PreviewScreenState extends State<PreviewScreen> {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<MyColors>()!;
 
+    final bloc = context.watch<SubscriptionBloc>();
+    final locked = !bloc.state.subscribed && bloc.state.freeDoc <= 0;
+
     return Scaffold(
       appBar: Appbar(
         title: 'Preview',
         right: Button(
-          onPressed: onPrint,
+          onPressed: locked ? onShowPaywall : onPrint,
           child: const SvgWidget(Assets.printer),
         ),
       ),

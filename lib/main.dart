@@ -56,7 +56,7 @@ void main() async {
           BlocProvider(
             create: (context) => SubscriptionBloc(
               repository: context.read<SubscriptionRepository>(),
-            )..add(CheckSubscription()),
+            ),
           ),
         ],
         child: MaterialApp.router(

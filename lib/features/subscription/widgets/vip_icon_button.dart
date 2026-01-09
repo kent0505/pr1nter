@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/icon_btn.dart';
+import '../bloc/subscription_bloc.dart';
 import '../data/subscription_repository.dart';
 
 class VipIconButton extends StatelessWidget {
@@ -10,10 +11,16 @@ class VipIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconBtn(
-      asset: Assets.vip,
-      onPressed: () {
-        context.read<SubscriptionRepository>().showPaywall();
+    return BlocBuilder<SubscriptionBloc, SubscriptionState>(
+      builder: (context, state) {
+        if (state.subscribed) return const SizedBox();
+
+        return IconBtn(
+          asset: Assets.vip,
+          onPressed: () {
+            context.read<SubscriptionRepository>().showPaywall();
+          },
+        );
       },
     );
   }

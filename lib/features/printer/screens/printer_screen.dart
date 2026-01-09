@@ -6,14 +6,14 @@ import '../../../core/constants.dart';
 import '../../../core/utils.dart';
 import '../../home/widgets/home_appbar.dart';
 import '../../subscription/bloc/subscription_bloc.dart';
-import '../models/preview.dart';
-import 'notes_screen.dart';
 import '../../scanner/screens/scanner_screen.dart';
 import '../../subscription/widgets/vip_icon_button.dart';
 import '../widgets/printer_tile.dart';
+import '../models/preview.dart';
 import 'preview_screen.dart';
 import 'printables_screen.dart';
 import 'web_screen.dart';
+import 'notes_screen.dart';
 
 class PrinterScreen extends StatefulWidget {
   const PrinterScreen({super.key});
@@ -29,7 +29,10 @@ class _PrinterScreenState extends State<PrinterScreen> {
         if (file.path.isNotEmpty && mounted) {
           context.push(
             PreviewScreen.routePath,
-            extra: Preview(files: [file]),
+            extra: Preview(
+              files: [file],
+              docs: true,
+            ),
           );
         }
       },
@@ -56,11 +59,24 @@ class _PrinterScreenState extends State<PrinterScreen> {
   }
 
   void onWeb() {
-    context.push(WebScreen.routePath);
+    context.push(
+      WebScreen.routePath,
+      extra: Urls.google,
+    );
   }
 
-  void onDropbox() async {
-    await launchURL(Urls.dropbox);
+  void onDropbox() {
+    context.push(
+      WebScreen.routePath,
+      extra: Urls.dropbox,
+    );
+  }
+
+  void onDrive() {
+    context.push(
+      WebScreen.routePath,
+      extra: Urls.drive,
+    );
   }
 
   void onScanner() async {
@@ -72,10 +88,6 @@ class _PrinterScreenState extends State<PrinterScreen> {
         );
       }
     });
-  }
-
-  void onDrive() async {
-    await launchURL(Urls.drive);
   }
 
   @override
@@ -109,17 +121,10 @@ class _PrinterScreenState extends State<PrinterScreen> {
                       description: 'Print photos from gallery',
                       onPressed: onPhotos,
                     ),
-                    // PrinterTile(
-                    //   asset: Assets.home3,
-                    //   title: 'Email',
-                    //   description: 'Print files from email client',
-                    //   onPressed: () {},
-                    // ),
                     PrinterTile(
                       asset: Assets.home4,
                       title: 'Printables',
                       description: 'Print giftcards, planners, calendars',
-                      locked: locked,
                       onPressed: onPrintables,
                     ),
                     PrinterTile(
@@ -136,13 +141,6 @@ class _PrinterScreenState extends State<PrinterScreen> {
                       locked: locked,
                       onPressed: onDropbox,
                     ),
-                    // PrinterTile(
-                    //   asset: Assets.home7,
-                    //   title: 'Contacts',
-                    //   description: 'Print any contact page',
-                    //   locked: locked,
-                    //   onPressed: () {},
-                    // ),
                     PrinterTile(
                       asset: Assets.home8,
                       title: 'Web pages',
@@ -154,7 +152,6 @@ class _PrinterScreenState extends State<PrinterScreen> {
                       asset: Assets.home9,
                       title: 'Scanner',
                       description: 'Scan any document',
-                      // locked: locked,
                       onPressed: onScanner,
                     ),
                     PrinterTile(

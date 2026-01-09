@@ -7,8 +7,9 @@ import '../../../core/utils.dart';
 abstract interface class SubscriptionRepository {
   const SubscriptionRepository();
 
-  int getFree();
-  Future<void> setFree(int free);
+  int getFreeDoc();
+  int getFreeScan();
+  Future<void> setFree(String key, int value);
   Future<void> showPaywall();
   Adapty getAdapty();
 }
@@ -24,13 +25,18 @@ final class SubscriptionRepositoryImpl implements SubscriptionRepository {
   final Adapty _adapty;
 
   @override
-  int getFree() {
-    return _prefs.getInt(Keys.free) ?? Constants.free;
+  int getFreeDoc() {
+    return _prefs.getInt(Keys.freeDoc) ?? Constants.freeDoc;
   }
 
   @override
-  Future<void> setFree(int free) async {
-    await _prefs.setInt(Keys.free, free);
+  int getFreeScan() {
+    return _prefs.getInt(Keys.freeScan) ?? Constants.freeScan;
+  }
+
+  @override
+  Future<void> setFree(String key, int value) async {
+    await _prefs.setInt(key, value);
   }
 
   @override

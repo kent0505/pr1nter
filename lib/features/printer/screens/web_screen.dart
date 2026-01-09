@@ -9,7 +9,9 @@ import '../../../core/widgets/button.dart';
 import '../../../core/widgets/svg_widget.dart';
 
 class WebScreen extends StatefulWidget {
-  const WebScreen({super.key});
+  const WebScreen({super.key, required this.url});
+
+  final String url;
 
   static const routePath = '/WebScreen';
 
@@ -51,7 +53,7 @@ class _WebScreenState extends State<WebScreen> {
 
     return Scaffold(
       appBar: Appbar(
-        title: 'Web Pages',
+        title: widget.url.replaceAll('https://', ''),
         right: Button(
           onPressed: onPrint,
           child: SvgWidget(
@@ -64,9 +66,7 @@ class _WebScreenState extends State<WebScreen> {
         children: [
           Expanded(
             child: InAppWebView(
-              initialUrlRequest: URLRequest(
-                url: WebUri('https://google.com'),
-              ),
+              initialUrlRequest: URLRequest(url: WebUri(widget.url)),
               onWebViewCreated: (controller) {
                 webViewController = controller;
               },

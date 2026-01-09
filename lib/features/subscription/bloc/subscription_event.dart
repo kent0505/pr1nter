@@ -11,4 +11,6 @@ class ProfileUpdated extends SubscriptionEvent {
   final AdaptyProfile profile;
 }
 
-final class UseFree extends SubscriptionEvent {}
+final class UseFreeDoc extends SubscriptionEvent {}
+
+final class UseFreeScan extends SubscriptionEvent {}

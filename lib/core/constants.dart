@@ -14,7 +14,8 @@ abstract final class Constants {
   static const double navBarHeight = 74;
   static const double mainButtonWidth = 186;
   static const int milliseconds = 400;
-  static const int free = 5;
+  static const int freeDoc = 1;
+  static const int freeScan = 1;
 }
 
 abstract final class Assets {
@@ -85,13 +86,15 @@ abstract final class Assets {
 abstract final class Keys {
   static const String onboard = 'onboard';
   static const String model = 'model';
-  static const String free = 'free';
+  static const String freeDoc = 'freeDoc';
+  static const String freeScan = 'freeScan';
 }
 
 abstract final class Urls {
-  static const String privacy = 'https://instagram.com'; // change
-  static const String terms = 'https://rezka.ag'; // change
-  static const String contact = ''; // change
-  static const String dropbox = 'https://www.dropbox.com/';
-  static const String drive = 'https://workspace.google.com/products/drive/';
+  static const String privacy = 'https://instagram.com'; // TODO
+  static const String terms = 'https://rezka.ag'; // TODO
+  static const String contact = ''; // TODO
+  static const String google = 'https://google.com';
+  static const String dropbox = 'https://dropbox.com';
+  static const String drive = 'https://workspace.google.com/products/drive';
 }

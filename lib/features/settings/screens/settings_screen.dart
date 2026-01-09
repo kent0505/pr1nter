@@ -49,7 +49,9 @@ class SettingsScreen extends StatelessWidget {
                   SettingsTile(
                     title: 'Share app',
                     asset: Assets.share,
-                    onPressed: () async {},
+                    onPressed: () {
+                      // TODO
+                    },
                   ),
                   SettingsTile(
                     title: 'Contact us',
@@ -62,23 +64,7 @@ class SettingsScreen extends StatelessWidget {
                     title: 'Rate us',
                     asset: Assets.star,
                     onPressed: () {
-                      // DialogWidget.show(
-                      //   context,
-                      //   title: 'Purchase Cancelled',
-                      //   buttonTexts: ['OK', 'OK'],
-                      //   buttonColors: [
-                      //     colors.tertiary2,
-                      //     colors.tertiary2,
-                      //   ],
-                      //   onPresseds: [
-                      //     () {
-                      //       context.pop();
-                      //     },
-                      //     () {
-                      //       context.pop();
-                      //     },
-                      //   ],
-                      // );
+                      // TODO
                     },
                   ),
                 ],

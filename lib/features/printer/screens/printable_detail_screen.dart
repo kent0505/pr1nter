@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:screenshot/screenshot.dart';
 
@@ -12,6 +13,8 @@ import '../../../core/widgets/button.dart';
 import '../../../core/widgets/img.dart';
 import '../../../core/widgets/main_button.dart';
 import '../../../core/widgets/svg_widget.dart';
+import '../../subscription/bloc/subscription_bloc.dart';
+import '../../subscription/data/subscription_repository.dart';
 
 class PrintableDetailScreen extends StatefulWidget {
   const PrintableDetailScreen({super.key, required this.asset});
@@ -33,6 +36,8 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
 
   late File file;
 
+  bool isReady = false;
+
   void onShare() async {
     await shareFiles([file]);
   }
@@ -41,13 +46,20 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
     await printDocument(await document.save());
   }
 
+  void onShowPaywall() {
+    context.read<SubscriptionRepository>().showPaywall();
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      file = await getFile(await getBytes(screenshotController));
+      final bytes = await getBytes(screenshotController);
+      file = await getFile(bytes);
       document = await buildDocument([file]);
-      setState(() {});
+      setState(() {
+        isReady = true;
+      });
     });
   }
 
@@ -87,7 +99,11 @@ class _PrintableDetailScreenState extends State<PrintableDetailScreen> {
             children: [
               MainButton(
                 title: 'Print',
-                onPressed: bytes.isEmpty ? null : onPrint,
+                onPressed: !isReady
+                    ? null
+                    : context.read<SubscriptionBloc>().state.subscribed
+                        ? onPrint
+                        : onShowPaywall,
               ),
             ],
           ),

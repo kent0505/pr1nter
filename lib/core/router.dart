@@ -58,7 +58,9 @@ final routerConfig = GoRouter(
     ),
     GoRoute(
       path: WebScreen.routePath,
-      builder: (context, state) => const WebScreen(),
+      builder: (context, state) => WebScreen(
+        url: state.extra as String,
+      ),
     ),
 
     // scanner
