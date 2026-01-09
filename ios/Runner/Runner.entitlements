@@ -3,8 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>group.com.example.pr1nter</string>
-	</array>
+	<array/>
 </dict>
 </plist>
